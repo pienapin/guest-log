@@ -10,7 +10,18 @@ class KunjunganController extends Controller
     public function list(Request $request)
     {
         $query = Kunjungan::with(['pengunjung', 'kategori']);
-        $kunjungan = $query->get();
+
+        if ($request->perPage) {
+            $perPage = $request->perPage;
+        } else {
+            $perPage = 15;
+        }
+
+        if ($request->paginate) {
+            $kunjungan = $query->paginate($perPage);
+        } else {
+            $kunjungan = $query->get();
+        }
 
         return response()->json([
             'message'=>'Kunjungan\'s list is successfully fetched',
