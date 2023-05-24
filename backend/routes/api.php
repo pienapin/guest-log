@@ -24,3 +24,4 @@ Route::get('/pengunjung', [PengunjungController::class, 'list']);
 Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
 
 Route::get('/kunjungan', [KunjunganController::class, 'list']);
+Route::post('/kunjungan/submit', [KunjunganController::class, 'submit']);
