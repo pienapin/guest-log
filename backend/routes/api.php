@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\PengunjungController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KunjunganController;
+use App\Http\Controllers\PengunjungController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/pengunjung', [PengunjungController::class, 'list']);
+Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
+
+Route::get('/kunjungan', [KunjunganController::class, 'list']);

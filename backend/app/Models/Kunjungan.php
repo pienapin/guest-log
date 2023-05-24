@@ -24,6 +24,6 @@ class Kunjungan extends Model
     }
 
     public function kategori() {
-        return $this->hasOne(Kategori::class);
+        return $this->belongsTo(Kategori::class);
     }
 }
