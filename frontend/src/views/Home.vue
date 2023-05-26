@@ -46,5 +46,18 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
 
+  // get access to video tag within template
+  const videoRef = ref();
+  const canvasRef = ref();
+
+  onMounted(() => {
+    const video = videoRef.value;
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      });
+  });
 </script>
