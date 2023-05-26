@@ -46,67 +46,72 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+/* ==================== imports ==================== */
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import * as faceapi from 'face-api.js';
 import { getPengunjungList } from '@/services/pengunjung';
 
-  // get access to video tag within template
-  const videoRef = ref();
-  const canvasRef = ref();
 
-  let pengunjungList;
-  let intervalId;
 
-  const fetchData = async () => {
-    // baseApi.get('api/pengunjung')
-    //   .then(results => {
-    //     pengunjungList = results;
-    //     console.log(pengunjungList);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-    pengunjungList = await getPengunjungList();
-    console.log(pengunjungList);
-  }
 
-  const startPolling = () => {
-    fetchData(); // Initial fetch
+/* ==================== variables ==================== */
+// get access to video tag within template
+const videoRef = ref();
+const canvasRef = ref();
 
-    // Set up a polling interval
-    intervalId = setInterval(() => {
-      fetchData();
-    }, 5000); // Poll every 5 seconds (adjust as needed)
-  }
+let pengunjungList;
+let intervalId;
+
+
+
+
+/* ==================== lifecycles ==================== */
+onMounted(() => {
+  startPolling();
   
-  const stopPolling = () => {
-    clearInterval(intervalId); // Clear the polling interval
-  } 
-
-  onMounted(() => {
-    startPolling()
-    
-    const video = videoRef.value;
-    navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-      video.srcObject = stream;
-    });
-    
-    // Load face detection and recognition models
-    Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-      faceapi.nets.faceExpressionNet.loadFromUri('/models'),
-      faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-    ]).then(() => {
-      console.log('Models loaded')
-    });
+  const video = videoRef.value;
+  navigator.mediaDevices.getUserMedia({ video: true })
+  .then(stream => {
+    video.srcObject = stream;
   });
-
-  onBeforeUnmount(() => {
-    stopPolling();
+  
+  // Load face detection and recognition models
+  Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+    faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+    faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+    faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+    faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+  ]).then(() => {
+    console.log('Models loaded')
   });
+});
+
+onBeforeUnmount(() => {
+  stopPolling();
+});
+
+
+
+
+/* ==================== functions ==================== */
+const fetchData = async () => {
+  pengunjungList = await getPengunjungList();
+  console.log(pengunjungList);
+}
+
+
+const startPolling = () => {
+  fetchData();
+  intervalId = setInterval(() => {
+    fetchData();
+  }, 5000);
+}
+
+
+const stopPolling = () => {
+  clearInterval(intervalId);
+} 
 </script>
 
 <style scoped>
