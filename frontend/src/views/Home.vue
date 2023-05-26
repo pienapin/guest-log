@@ -59,6 +59,10 @@ import { getPengunjungList } from '@/services/pengunjung';
 const videoRef = ref();
 const canvasRef = ref();
 
+// declare faceMatcher for face recognition
+let faceMatcher;
+const pengunjung = ref(null);
+
 let pengunjungList;
 let intervalId;
 
@@ -112,6 +116,76 @@ const startPolling = () => {
 const stopPolling = () => {
   clearInterval(intervalId);
 } 
+
+// function to get image from camera stream
+// and recognize the face captured
+const detectFace = async () => {
+  stopPolling();
+  console.log('detecting...');
+  const video = videoRef.value;
+  const canvas = canvasRef.value;
+
+  let detectedJSON;
+
+  // draw image from camera stream to canvas
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  // Send canvas image to face-api.js for processing
+  const detection = await faceapi.detectSingleFace(canvas).withFaceLandmarks().withFaceDescriptor();
+  let result = null;
+  if (detection) {
+    // console.log('Face detected!');
+
+    // get detected face descriptor
+    const detectedDescriptor = detection.descriptor;
+    detectedJSON = JSON.stringify([detectedDescriptor]);
+
+    // make faceMatcher based on face from database
+    if (pengunjungList.length > 0) {
+      const labeledDescriptors = pengunjungList.map(pengunjung => {
+        const descriptorObject = JSON.parse(pengunjung.descriptors);
+        const descriptorArray = Object.values(descriptorObject[0]);
+        const descriptor = new Float32Array(descriptorArray);
+        return new faceapi.LabeledFaceDescriptors(pengunjung.id.toString(), [descriptor]);
+      })
+      faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5)
+  
+      
+      // compare detected descriptor with face from database
+      result = faceMatcher.findBestMatch(detectedDescriptor);
+    } else {
+      result = null;
+    }
+
+    if (result && result.toString(false) != "unknown") {
+      console.log('Result Exists!');
+
+      const index = pengunjungList.findIndex(pengunjung => {
+        return pengunjung.id === parseInt(result.toString(false))
+      });
+
+      pengunjung.value = pengunjungList[index];
+      
+    } else {
+      console.log("Result Doesn't Exist!");
+      pengunjung.value = null;
+      detected.value = detectedJSON;
+    }
+    console.log(pengunjung.value);
+  } else {
+    alert('No face');
+  }
+}
+
+// event listener, press enter to call detectFace function
+const enterToDetect = ({ code }) => {
+  if (code === "Enter") {
+    detectFace();
+  }
+}
+
+document.addEventListener('keypress', enterToDetect, true);
 </script>
 
 <style scoped>
