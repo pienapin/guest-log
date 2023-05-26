@@ -61,3 +61,13 @@ import { onMounted, ref } from 'vue';
       });
   });
 </script>
+
+<style scoped>
+  video {
+    transform: scale(-1,1);
+  }
+  
+  video::-webkit-media-controls-panel {
+    transform: scale(-1,1);
+  }
+</style>
