@@ -10,7 +10,7 @@ export default {
   plugins: [
     require("daisyui"),
   ],
-  daisyUI: {
+  daisyui: {
     themes: ["emerald"],
   },
 }
