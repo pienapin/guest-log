@@ -47,7 +47,7 @@
 
 <script setup>
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
-import { baseApi } from '@/plugins/axios';
+import * as faceapi from 'face-api.js';
 import { getPengunjungList } from '@/services/pengunjung';
 
   // get access to video tag within template
@@ -84,14 +84,24 @@ import { getPengunjungList } from '@/services/pengunjung';
   } 
 
   onMounted(() => {
+    startPolling()
+    
     const video = videoRef.value;
-
-    startPolling();
-
     navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        video.srcObject = stream;
-      });
+    .then(stream => {
+      video.srcObject = stream;
+    });
+    
+    // Load face detection and recognition models
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+      faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
+    ]).then(() => {
+      console.log('Models loaded')
+    });
   });
 
   onBeforeUnmount(() => {
