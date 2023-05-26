@@ -47,18 +47,24 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import { getPengunjungList } from '@/services/pengunjung';
 
   // get access to video tag within template
   const videoRef = ref();
   const canvasRef = ref();
 
-  onMounted(() => {
+  let pengunjungList;
+
+  onMounted(async () => {
     const video = videoRef.value;
 
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         video.srcObject = stream;
       });
+
+    pengunjungList = await getPengunjungList();
+    console.log(pengunjungList)
   });
 </script>
 
