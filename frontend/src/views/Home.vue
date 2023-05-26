@@ -46,7 +46,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import { baseApi } from '@/plugins/axios';
 import { getPengunjungList } from '@/services/pengunjung';
 
   // get access to video tag within template
@@ -54,17 +55,47 @@ import { getPengunjungList } from '@/services/pengunjung';
   const canvasRef = ref();
 
   let pengunjungList;
+  let intervalId;
 
-  onMounted(async () => {
+  const fetchData = async () => {
+    // baseApi.get('api/pengunjung')
+    //   .then(results => {
+    //     pengunjungList = results;
+    //     console.log(pengunjungList);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+    pengunjungList = await getPengunjungList();
+    console.log(pengunjungList);
+  }
+
+  const startPolling = () => {
+    fetchData(); // Initial fetch
+
+    // Set up a polling interval
+    intervalId = setInterval(() => {
+      fetchData();
+    }, 5000); // Poll every 5 seconds (adjust as needed)
+  }
+  
+  const stopPolling = () => {
+    clearInterval(intervalId); // Clear the polling interval
+  } 
+
+  onMounted(() => {
     const video = videoRef.value;
+
+    startPolling();
 
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
         video.srcObject = stream;
       });
+  });
 
-    pengunjungList = await getPengunjungList();
-    console.log(pengunjungList)
+  onBeforeUnmount(() => {
+    stopPolling();
   });
 </script>
 
