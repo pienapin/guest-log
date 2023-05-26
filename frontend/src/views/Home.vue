@@ -1,35 +1,39 @@
 <template>
-  <div class="min-h-screen">
+  <div class="min-h-screen grid auto-rows-max gap-0 grid-flow-row content-between bg-gray-50">
     <!-- Navbar -->
-    <div class="navbar py-10">
-      <div class="navbar-start"></div>
-      <div class="navbar-center">
-        <img class="w-16 mx-5" src="@/assets/img/bps-logo.png">
-        <div class="grid grid-flow-row">
-          <a class="uppercase font-medium text-4xl ff-oswald text-center">BUTEP BPS Provinsi Riau</a>
-          <h3 class="uppercase font-medium text-xl ff-oswald text-center">Buku Tamu Elektronik Pengenal Wajah</h3>
+    <div>
+      <div class="navbar md:py-10 pt-5">
+        <div class="navbar-start"></div>
+        <div class="navbar-center max-md:flex max-md:flex-col">
+          <img class="w-16 mx-5" src="@/assets/img/bps-logo.png">
+          <div class="grid grid-flow-row">
+            <a class="uppercase font-medium text-4xl max-md:text-2xl ff-oswald text-center">BUTEP BPS Provinsi Riau</a>
+            <h3 class="uppercase font-medium text-xl max-md:text-sm ff-oswald text-center">Buku Tamu Elektronik Pengenal Wajah</h3>
+          </div>
         </div>
+        <div class="navbar-end"></div>
       </div>
-      <div class="navbar-end"></div>
     </div>
 
     <!-- Body -->
-    <div class="grid grid-cols-2 mx-16 my-6 gap-12 max-h-screen">
-      <div class="h-full grid items-center justify-items-center">
-        <video ref="videoRef" class="rounded-lg" autoplay></video>
-        <canvas class="hidden" ref="canvasRef" width="640" height="480"></canvas>
-      </div>
-      <div class="flex flex-col my-auto place-items-center gap-8">
-        <div class="h-60">
-          <img class="h-full" src="@/assets/img/face-id.png">
+    <div class="mb-1">
+      <div class="grid md:grid-cols-2 max-md:grid-rows-2 md:mx-16 mx-5 my-6 md:gap-12 max-h-screen">
+        <div class="h-full w-full grid items-center justify-items-center">
+          <video ref="videoRef" class="rounded-lg" autoplay></video>
+          <canvas class="hidden" ref="canvasRef" width="640" height="480"></canvas>
         </div>
-        <div class="text-lg font-medium">
-          <p>1. Pastikan wajah anda terlihat jelas di kamera</p>
-          <p>2. Tekan tombol &nbsp;<kbd class="kbd kbd-md">ENTER</kbd>&nbsp; atau klik tombol di bawah</p>
-          <p>3. Isi data yang diperlukan pada form yang muncul</p>
-        </div>
-        <div>
-          <button @click="detectFace" class="uppercase btn btn-info text-base-100 text-lg">Pindai Wajah</button>
+        <div class="flex flex-col my-auto place-items-center gap-8">
+          <div class="max-md:hidden h-60">
+            <img class="h-full" src="@/assets/img/face-id.png">
+          </div>
+          <div class="md:text-lg max-md:text-sm font-medium">
+            <p>1. Pastikan wajah anda terlihat jelas di kamera</p>
+            <p>2. Tekan tombol &nbsp;<kbd class="kbd kbd-md">ENTER</kbd>&nbsp; atau klik tombol di bawah</p>
+            <p>3. Isi data yang diperlukan pada form yang muncul</p>
+          </div>
+          <div>
+            <button @click="detectFace" class="uppercase btn btn-info text-base-100 md:text-lg max-md:text-md">Pindai Wajah</button>
+          </div>
         </div>
       </div>
     </div>
@@ -37,11 +41,13 @@
     <!-- Form -->
 
     <!-- Footer -->
-    <footer class="footer footer-center p-4 absolute bottom-0">
-      <div>
-        <p>Copyright © 2023 - All right reserved by Magang MBKM Mandiri by BPS Riau - Universitas Riau 2023</p>
-      </div>
-    </footer>
+    <div class="h-[52px]">
+      <footer class="footer footer-center p-4 absolute bottom-0">
+        <div>
+          <p>Copyright © 2023 - All right reserved by Magang MBKM Mandiri by BPS Riau - Universitas Riau 2023</p>
+        </div>
+      </footer>
+    </div>
   </div>
 </template>
 
@@ -191,6 +197,9 @@ document.addEventListener('keypress', enterToDetect, true);
 <style scoped>
   video {
     transform: scale(-1,1);
+    /* override other styles to make responsive */
+    width: 95%    !important;
+    height: auto   !important;
   }
   
   video::-webkit-media-controls-panel {
