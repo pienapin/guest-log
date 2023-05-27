@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen grid auto-rows-max gap-0 grid-flow-row content-between bg-gray-50">
+  <div class="min-h-screen grid auto-rows-max gap-0 grid-flow-row content-between bg-gray-100">
     <!-- Navbar -->
     <div>
       <div class="navbar md:py-10 pt-5">
@@ -26,7 +26,7 @@
           <div class="max-md:hidden h-60">
             <img class="h-full" src="@/assets/img/face-id.png">
           </div>
-          <div class="md:text-lg max-md:text-sm font-medium">
+          <div class="md:text-lg max-md:text-sm font-semibold">
             <p>1. Pastikan wajah anda terlihat jelas di kamera</p>
             <p>2. Tekan tombol &nbsp;<kbd class="kbd kbd-md">ENTER</kbd>&nbsp; atau klik tombol di bawah</p>
             <p>3. Isi data yang diperlukan pada form yang muncul</p>
