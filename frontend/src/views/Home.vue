@@ -39,6 +39,9 @@
     </div>
 
     <!-- Form -->
+    <Teleport to="body">
+      <GuestForm @close="closeForm" :pengunjung="pengunjung" :descriptorDetected="detected"></GuestForm>
+    </Teleport>
 
     <!-- Footer -->
     <div class="h-[52px]">
@@ -56,6 +59,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import * as faceapi from 'face-api.js';
 import { getPengunjungList } from '@/services/pengunjung';
+import GuestForm from '../components/GuestForm.vue';
 
 
 
@@ -68,6 +72,7 @@ const canvasRef = ref();
 // declare faceMatcher for face recognition
 let faceMatcher;
 const pengunjung = ref(null);
+const detected = ref();
 
 let pengunjungList;
 let intervalId;
@@ -78,7 +83,6 @@ let intervalId;
 /* ==================== lifecycles ==================== */
 onMounted(() => {
   startPolling();
-  
   const video = videoRef.value;
   navigator.mediaDevices.getUserMedia({ video: true })
   .then(stream => {
@@ -179,6 +183,7 @@ const detectFace = async () => {
       detected.value = detectedJSON;
     }
     console.log(pengunjung.value);
+    showForm();
   } else {
     alert('No face');
   }
@@ -192,6 +197,15 @@ const enterToDetect = ({ code }) => {
 }
 
 document.addEventListener('keypress', enterToDetect, true);
+
+// form function
+const showForm = () => {
+  document.getElementById('guest-form').checked = true;
+}
+
+const closeForm = () => {
+  document.getElementById('guest-form').checked = false;
+}
 </script>
 
 <style scoped>
