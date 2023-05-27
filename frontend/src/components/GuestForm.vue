@@ -85,6 +85,7 @@
 <script setup>
 import { reactive, ref, onBeforeUpdate, onUpdated, onMounted } from 'vue';
 import { addPengunjung } from '../services/pengunjung';
+import { addKunjungan } from '../services/kunjungan';
 
 const props = defineProps({
   pengunjung: Object,
@@ -167,10 +168,29 @@ document.addEventListener('keyup', escapeToClose, true);
 // for submitting form
 const submit = () => {
   console.log(form);
-  addPengunjung(form)
-    .then((result) => {
-      console.log(result);
-    });
+  if (form.isExists === true) {
+    addKunjungan(
+      {
+        pengunjung_id: form.pengunjung_id,
+        tujuan: form.tujuan,
+        kategori_id: form.kategori_id,
+        waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
+      }
+    );
+  } else {
+    addPengunjung(form)
+      .then((result) => {
+        console.log(result);
+        addKunjungan(
+          {
+            pengunjung_id: result.id,
+            tujuan: form.tujuan,
+            kategori_id: form.kategori_id,
+            waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
+          }
+        )
+      });
+  }
   emit('close');
 }
 </script>
