@@ -9,3 +9,9 @@ export async function getPengunjungList() {
   return response.data;
 }
 
+export async function addPengunjung(body) {
+  const response = await baseApi
+    .post(`${api}/submit`, body);
+    
+  return response.data;
+}

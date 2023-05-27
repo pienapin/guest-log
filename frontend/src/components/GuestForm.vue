@@ -84,6 +84,7 @@
 
 <script setup>
 import { reactive, ref, onBeforeUpdate, onUpdated, onMounted } from 'vue';
+import { addPengunjung } from '../services/pengunjung';
 
 const props = defineProps({
   pengunjung: Object,
@@ -165,7 +166,11 @@ document.addEventListener('keyup', escapeToClose, true);
 
 // for submitting form
 const submit = () => {
-  router.post('/submit', form);
+  console.log(form);
+  addPengunjung(form)
+    .then((result) => {
+      console.log(result);
+    });
   emit('close');
 }
 </script>
