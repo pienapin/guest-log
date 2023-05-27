@@ -40,7 +40,7 @@
 
     <!-- Form -->
     <Teleport to="body">
-      <GuestForm @close="closeForm" :key="state" :mounted="mounted" :pengunjung="pengunjung" :descriptorDetected="detected"></GuestForm>
+      <GuestForm @close="closeForm" :key="state" :mounted="mounted" :kategori="kategoriList" :pengunjung="pengunjung" :descriptorDetected="detected"></GuestForm>
     </Teleport>
 
     <!-- Footer -->
@@ -59,7 +59,8 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import * as faceapi from 'face-api.js';
 import { getPengunjungList } from '@/services/pengunjung';
-import GuestForm from '../components/GuestForm.vue';
+import { getKategoriList } from '@/services/kategori';
+import GuestForm from '@/components/GuestForm.vue';
 
 
 
@@ -75,6 +76,7 @@ const pengunjung = ref(null);
 const detected = ref();
 
 let pengunjungList;
+let kategoriList;
 let intervalId;
 const state = ref(0);
 const mounted = ref(false);
@@ -113,7 +115,7 @@ onBeforeUnmount(() => {
 /* ==================== functions ==================== */
 const fetchData = async () => {
   pengunjungList = await getPengunjungList();
-  console.log(pengunjungList);
+  kategoriList = await getKategoriList();
 }
 
 

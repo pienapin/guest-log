@@ -61,7 +61,7 @@
             <label class="label label-text">Kategori Kunjungan</label>
             <select class="select select-bordered w-full font-normal" v-model="form.kategori_id" required>
               <option disabled selected value="0">Pilih Kategori Kunjungan</option>
-              <!-- <option v-for="kat in kategori" :value="kat.id">{{ kat.kategori }}</option> -->
+              <option v-for="kat in kategori" :value="kat.id">{{ kat.kategori }}</option>
             </select>
           </div>
           <div>
@@ -90,6 +90,7 @@ import { addKunjungan } from '../services/kunjungan';
 const props = defineProps({
   pengunjung: Object,
   descriptorDetected: String,
+  kategori: Array,
   mounted: Boolean,
 });
 
