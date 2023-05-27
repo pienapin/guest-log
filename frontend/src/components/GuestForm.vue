@@ -1,5 +1,5 @@
 <template>
-  <input type="checkbox" id="guest-form" class="modal-toggle" />
+  <input type="checkbox" id="guest-form" class="modal-toggle" :checked="mountedState"/>
   <div class="modal fix-modal">
     <div class="modal-box relative max-w-3xl">
       <div class="row">
@@ -83,12 +83,15 @@
 </template>
 
 <script setup>
-import { reactive, ref, onBeforeUpdate, onUpdated } from 'vue';
+import { reactive, ref, onBeforeUpdate, onUpdated, onMounted } from 'vue';
 
 const props = defineProps({
   pengunjung: Object,
   descriptorDetected: String,
+  mounted: Boolean,
 });
+
+const mountedState = ref(props.mounted);
 
 const emit = defineEmits(['close']);
 
@@ -110,22 +113,26 @@ const isPengunjungExists = ref(false);
 const telepon_wa = ref(false);
 const isValid = ref(false);
 
-if (props.pengunjung) {
-  form.isExists = true;
-  form.pengunjung_id = props.pengunjung.id;
-  form.nama = props.pengunjung.nama;
-  form.instansi = props.pengunjung.instansi;
-  form.jabatan = props.pengunjung.jabatan;
-  form.email = props.pengunjung.email;
-  form.no_hp = props.pengunjung.no_hp;
-  form.no_wa = props.pengunjung.no_wa;
-  form.descriptors = props.pengunjung.descriptors;
+onMounted(() => {
+  mountedState.value = props.mounted;
+  if (props.pengunjung) {
+    form.isExists = true;
+    form.pengunjung_id = props.pengunjung.id;
+    form.nama = props.pengunjung.nama;
+    form.instansi = props.pengunjung.instansi;
+    form.jabatan = props.pengunjung.jabatan;
+    form.email = props.pengunjung.email;
+    form.no_hp = props.pengunjung.no_hp;
+    form.no_wa = props.pengunjung.no_wa;
+    form.descriptors = props.pengunjung.descriptors;
+  
+    isPengunjungExists.value = true;
+  } else {
+    form.isExists = false;
+    form.descriptors = props.descriptorDetected;
+  }
+});
 
-  isPengunjungExists.value = true;
-} else {
-  form.isExists = false;
-  form.descriptors = props.descriptorDetected;
-}
 
 onBeforeUpdate(() => {
   isValid.value = true;
