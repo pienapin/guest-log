@@ -209,6 +209,7 @@ const showForm = () => {
 const closeForm = () => {
   state.value += 1;
   mounted.value = false;
+  startPolling();
 }
 </script>
 
