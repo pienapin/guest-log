@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\PengunjungController;
 
@@ -25,3 +26,7 @@ Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
 
 Route::get('/kunjungan', [KunjunganController::class, 'list']);
 Route::post('/kunjungan/submit', [KunjunganController::class, 'submit']);
+
+Route::get('/kategori', [KategoriController::class, 'list']);
+Route::post('/kategori/add', [KategoriController::class, 'add']);
+Route::delete('/kategori/delete', [KategoriController::class, 'del']);
