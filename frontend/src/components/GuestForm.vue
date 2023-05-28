@@ -66,8 +66,7 @@
           </div>
           <div>
             <label class="label label-text">Tujuan Kunjungan</label>
-            <textarea rows="3" class="textarea textarea-bordered textarea-md leading-4 w-full" v-model="form.tujuan"
-              required />
+            <textarea rows="3" class="textarea textarea-bordered textarea-md leading-4 w-full" v-model="form.tujuan" required></textarea>
           </div>
         </div>
         <div class="mt-6 divider"></div>
@@ -109,7 +108,7 @@ const form = reactive({
   no_wa: null,
   descriptors: null,
   kategori_id: 0,
-  tujuan: null,
+  tujuan: "",
 });
 
 const isPengunjungExists = ref(false);
@@ -147,6 +146,10 @@ onBeforeUpdate(() => {
       isValid.value = false;
     }
   });
+
+  if (form.tujuan === "") {
+    isValid.value = false;
+  }
 })
 
 onUpdated(() => {
