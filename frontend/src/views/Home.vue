@@ -40,7 +40,7 @@
 
     <!-- Form -->
     <Teleport to="body">
-      <GuestForm @close="closeForm" :key="state" :mounted="mounted" :kategori="kategoriList" :pengunjung="pengunjung" :descriptorDetected="detected"></GuestForm>
+      <GuestForm @close="closeForm" :key="renderCount" :mounted="mounted" :kategori="kategoriList" :pengunjung="pengunjung" :descriptorDetected="detected"></GuestForm>
     </Teleport>
 
     <!-- Footer -->
@@ -78,7 +78,7 @@ const detected = ref();
 let pengunjungList;
 let kategoriList;
 let intervalId;
-const state = ref(0);
+const renderCount = ref(0);
 const mounted = ref(false);
 
 
@@ -204,12 +204,12 @@ document.addEventListener('keypress', enterToDetect, true);
 
 // form function
 const showForm = () => {
-  state.value += 1;
+  renderCount.value += 1;
   mounted.value = true;
 }
 
 const closeForm = () => {
-  state.value += 1;
+  renderCount.value += 1;
   mounted.value = false;
   startPolling();
 }
