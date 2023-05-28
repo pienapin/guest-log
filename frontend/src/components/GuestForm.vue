@@ -8,7 +8,7 @@
         <label class="btn btn-xs btn-error btn-circle absolute right-2 top-2" @click="$emit('close')"></label>
       </div>
       <form @submit.prevent="submit" id="guest-form" class="form-control ff-roboto">
-        <div>
+        <div class="overflow-y-auto max-xl:h-[450px] max-xl:px-3">
           <div class="grid sm:grid-cols-2 max-sm:grid-rows-2 sm:gap-10 mb-3">
             <div>
               <label class="label label-text">Nama Lengkap Pengunjung</label>
@@ -61,6 +61,7 @@
             <label class="label label-text">Kategori Kunjungan</label>
             <select class="select select-bordered w-full font-normal" v-model="form.kategori_id" required>
               <option disabled selected value="0">Pilih Kategori Kunjungan</option>
+              <option value="1">Umum</option>
               <option v-for="kat in kategori" :value="kat.id">{{ kat.kategori }}</option>
             </select>
           </div>
