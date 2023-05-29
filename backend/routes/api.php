@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/pengunjung', [PengunjungController::class, 'list']);
 Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
+Route::post('/pengunjung/delete/{id}', [PengunjungController::class, 'del']);
 
 Route::get('/kunjungan', [KunjunganController::class, 'list']);
 Route::post('/kunjungan/submit', [KunjunganController::class, 'submit']);

@@ -97,4 +97,15 @@ class PengunjungController extends Controller
         ], 200);
     }
   }
+
+  public function del($id)
+  {
+    $pengunjung = Pengunjung::where('id', $id);
+
+    $pengunjung->delete();
+
+    return response()->json([
+      'message' => 'Pengunjung is successfully deleted',
+    ], 200);
+  }
 }
