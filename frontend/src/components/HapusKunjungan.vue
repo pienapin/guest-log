@@ -9,7 +9,7 @@
         dari daftar kunjungan?</p>
         <div class="modal-action">
           <label :for="'hapus_'+kunjungan.id" @click="hapus" class="btn btn-error text-base-100">Hapus</label>
-          <label :for="'hapus_'+kunjungan.id" class="btn btn-base-200">Batal</label>
+          <label :for="'hapus_'+kunjungan.id" @click="poll" class="btn btn-base-200">Batal</label>
         </div>
       </div>
     </div>
