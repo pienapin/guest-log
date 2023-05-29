@@ -69,7 +69,7 @@ const startPolling = () => {
   intervalId = setInterval(() => {
     fetchData();
     renderCount.value += 1;
-  }, 3000);
+  }, 2000);
 }
 
 
