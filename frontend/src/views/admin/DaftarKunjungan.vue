@@ -1,6 +1,6 @@
 <template>
-  <table :key="renderCount" data-theme="light" class="table table-compact rounded-lg w-full">
-    <tbody>
+  <table data-theme="light" class="table table-compact rounded-lg w-full">
+    <tbody :key="renderCount">
       <tr class="text-center">
         <th>No</th>
         <th class="text-start">Nama</th>
@@ -24,11 +24,11 @@
         <td>{{ kategori.kategori }}</td>
         <td class="text-justify whitespace-normal">{{ kunjungan.tujuan }}</td>
         <td class="text-center">
-          <label :for="'hapus_' + kunjungan.id"
+          <label :for="'hapus_' + kunjungan.id" @click="stopPolling"
             class="btn mx-1 btn-error text-base-100 btn-square min-h-0 h-8 w-8 p-0 text-xs">
             <i class="fa-solid fa-trash"></i>
           </label>
-          <!-- <HapusPengunjung :pengunjung="pengunjung"></HapusPengunjung> -->
+          <HapusKunjungan :poll="startPolling" :kunjungan="kunjungan"></HapusKunjungan>
         </td>
       </tr>
     </tbody>
@@ -37,8 +37,9 @@
 
 <script setup>
 /* ==================== imports ==================== */
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, onUpdated, ref } from 'vue';
 import { getKunjunganList } from '../../services/kunjungan';
+import HapusKunjungan from '../../components/HapusKunjungan.vue';
 
 let intervalId;
 let kunjunganList;
@@ -47,6 +48,7 @@ const renderCount = ref(0);
 const fetchData = async () => {
   kunjunganList = await getKunjunganList();
   console.log(kunjunganList)
+  renderCount.value += 1;
 }
 
 onMounted(() =>{
@@ -58,14 +60,16 @@ onBeforeUnmount(() => {
 });
 
 
+
+
 /* ==================== functions ==================== */
-const startPolling = async () => {
-  await fetchData();
+const startPolling = () => {
+  fetchData();
   renderCount.value += 1;
   intervalId = setInterval(() => {
     fetchData();
     renderCount.value += 1;
-  }, 5000);
+  }, 3000);
 }
 
 
