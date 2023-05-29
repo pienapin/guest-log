@@ -15,3 +15,10 @@ export async function addKunjungan(body) {
     
   return response.data;
 }
+
+export async function delKunjungan(body) {
+  const response = await baseApi
+    .delete(`${api}/delete`, body);
+    
+  return response.message;
+}
