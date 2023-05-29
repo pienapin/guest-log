@@ -26,6 +26,7 @@ Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
 
 Route::get('/kunjungan', [KunjunganController::class, 'list']);
 Route::post('/kunjungan/submit', [KunjunganController::class, 'submit']);
+Route::delete('/kunjungan/delete', [KunjunganController::class, 'del']);
 
 Route::get('/kategori', [KategoriController::class, 'list']);
 Route::post('/kategori/add', [KategoriController::class, 'add']);

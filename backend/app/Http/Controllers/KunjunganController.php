@@ -58,4 +58,15 @@ class KunjunganController extends Controller
       'data' => $kunjungan,
     ]);
   }
+
+  public function del(Request $request)
+  {
+    $kunjungan = Kunjungan::where('id', $request->kunjungan_id);
+
+    $kunjungan->delete();
+
+    return response()->json([
+      'message' => 'kunjungan is successfully deleted',
+    ], 200);
+  }
 }
