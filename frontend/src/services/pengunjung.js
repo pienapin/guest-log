@@ -9,6 +9,13 @@ export async function getPengunjungList() {
   return response.data;
 }
 
+export async function getPengunjungPage(page) {
+  const response = await baseApi
+    .get(`${api}?perPage=15&paginate=1&page=${page}`);
+    
+  return response.data;
+}
+
 export async function addPengunjung(body) {
   const response = await baseApi
     .post(`${api}/submit`, body);
