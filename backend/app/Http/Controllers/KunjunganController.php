@@ -10,7 +10,7 @@ class KunjunganController extends Controller
 {
   public function list(Request $request)
   {
-    $query = Kunjungan::with(['pengunjung', 'kategori']);
+    $query = Kunjungan::with(['pengunjung', 'kategori'])->orderBy('waktu_kunjungan', 'DESC');
 
     if ($request->perPage) {
       $perPage = $request->perPage;
