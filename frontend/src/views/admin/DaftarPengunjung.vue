@@ -20,15 +20,15 @@
             <td>{{ pengunjung.no_hp }}</td>
             <td>{{ pengunjung.no_wa }}</td>
             <td class="text-center">
-              <label :for="'edit_'+pengunjung.id" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
+              <label :for="'edit_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
                 <i class="fa-solid fa-pen"></i>
               </label>
-              <!-- <EditPengunjung :pengunjung="pengunjung"></EditPengunjung> -->
+              <EditPengunjung :poll="startPolling"  :pengunjung="pengunjung"></EditPengunjung>
     
-              <label :for="'hapus_'+pengunjung.id" class="btn mx-1 btn-error text-base-100 btn-square min-h-0 h-8 w-8 p-0 text-xs">
+              <label :for="'hapus_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-error text-base-100 btn-square min-h-0 h-8 w-8 p-0 text-xs">
                 <i class="fa-solid fa-trash"></i>
               </label>
-              <!-- <HapusPengunjung :pengunjung="pengunjung"></HapusPengunjung> -->
+              <HapusPengunjung :poll="startPolling" :pengunjung="pengunjung"></HapusPengunjung>
             </td>
           </tr>
     </tbody>
@@ -44,6 +44,9 @@
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { getPengunjungPage } from '@/services/pengunjung'
+import HapusPengunjung from '../../components/HapusPengunjung.vue';
+import EditPengunjung from '../../components/EditPengunjung.vue';
+
 
 let intervalId;
 let pengunjungList;
