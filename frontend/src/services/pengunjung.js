@@ -22,3 +22,17 @@ export async function addPengunjung(body) {
     
   return response.data;
 }
+
+export async function editengunjung(body) {
+  const response = await baseApi
+    .post(`${api}/submit`, body);
+    
+  return response.data;
+}
+
+export async function delPengunjung(body) {
+  const response = await baseApi
+    .post(`${api}/delete/${body}`);
+    
+  return response.data;
+}
