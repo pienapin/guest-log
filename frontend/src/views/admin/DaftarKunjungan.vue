@@ -3,6 +3,7 @@
     <tbody :key="renderCount">
       <tr class="text-center">
         <th>No</th>
+        <th class="text-start">Waktu Kunjungan</th>
         <th class="text-start">Nama</th>
         <th>Jabatan dan Instansi</th>
         <th>No. HP</th>
@@ -17,6 +18,7 @@
             {{ kategori = kunjungan.kategori }}
           </div>
           <th>{{ index + 1 }}</th>
+          <td class="text-start">{{ kunjungan.waktu_kunjungan }}</td>
           <td class="text-start">{{ pengunjung.nama }}</td>
           <td>{{ pengunjung.jabatan }} di {{ pengunjung.instansi }}</td>
           <td>{{ pengunjung.no_hp }}</td>
