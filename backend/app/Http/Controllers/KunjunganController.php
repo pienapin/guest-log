@@ -59,9 +59,9 @@ class KunjunganController extends Controller
     ]);
   }
 
-  public function del(Request $request)
+  public function del($id)
   {
-    $kunjungan = Kunjungan::where('id', $request->kunjungan_id);
+    $kunjungan = Kunjungan::where('id', $id);
 
     $kunjungan->delete();
 
