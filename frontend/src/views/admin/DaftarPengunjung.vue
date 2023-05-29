@@ -33,7 +33,7 @@
           </tr>
     </tbody>
   </table>
-  <div v-if="pengunjungList" class="btn-group mt-5">
+  <div v-if="pengunjungList" class="btn-group w-full justify-center  mt-5">
     <button v-if="pengunjungList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
     <button class="btn">Page {{ pengunjungList.current_page }} of {{ pengunjungList.last_page }}</button>
     <button v-if="pengunjungList.next_page_url" class="btn" @click="currentPage += 1">»</button>
