@@ -1,16 +1,26 @@
 <template>
   <table data-theme="light" class="table table-compact rounded-lg w-full">
+    <tr class="text-center">
+      <th>No</th>
+      <th class="text-start">Nama</th>
+      <th>Instansi</th>
+      <th>Jabatan</th>
+      <th>Email</th>
+      <th>No. HP</th>
+      <th>No. WA</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <th class="text-center"><i class="fa-solid fa-magnifying-glass"></i></th>
+      <td><input type="text" placeholder="Type here" v-model="search.keyword" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.instansi" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.jabatan" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.email" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.no_hp" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td></td>
+    </tr>
     <tbody :key="renderCount">
-      <tr class="text-center">
-        <th>No</th>
-        <th class="text-start">Nama</th>
-        <th>Instansi</th>
-        <th>Jabatan</th>
-        <th>Email</th>
-        <th>No. HP</th>
-        <th>No. WA</th>
-        <th>Action</th>
-      </tr>
         <tr v-if="pengunjungList" v-for="(pengunjung, index) in pengunjungList.data" class="hover text-center">
           <th>{{ index+1 }}</th>
             <td class="text-start">{{ pengunjung.nama }}</td>
@@ -18,7 +28,7 @@
             <td>{{ pengunjung.jabatan }}</td>
             <td>{{ pengunjung.email }}</td>
             <td>{{ pengunjung.no_hp }}</td>
-            <td>{{ pengunjung.no_wa }}</td>
+            <td><a :href="'https://wa.me/'+pengunjung.no_wa">{{ pengunjung.no_wa }}</a></td>
             <td class="text-center">
               <label :for="'edit_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
                 <i class="fa-solid fa-pen"></i>
@@ -42,8 +52,8 @@
 
 <script setup>
 /* ==================== imports ==================== */
-import { onBeforeUnmount, onMounted, ref } from 'vue';
-import { getPengunjungPage } from '@/services/pengunjung'
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+import { getPengunjungPage, searchPengunjung } from '@/services/pengunjung'
 import HapusPengunjung from '../../components/HapusPengunjung.vue';
 import EditPengunjung from '../../components/EditPengunjung.vue';
 
@@ -52,9 +62,37 @@ let intervalId;
 let pengunjungList;
 const renderCount = ref(0);
 const currentPage = ref(1);
+const isSearching = ref(false)
+
+const search = reactive({
+  keyword: null,
+  instansi: null,
+  jabatan: null,
+  email: null,
+  no_hp: null,
+  no_wa: null,
+});
 
 const fetchData = async () => {
-  pengunjungList = await getPengunjungPage(currentPage.value);
+  for (const key of Object.keys(search)) {
+    const element = search[key];
+    console.log(key)
+    console.log(element)
+    console.log(element !== null)
+    console.log(element !== "")
+    console.log(isSearching)
+    if (element !== null) {
+      if (element !== "") {
+        isSearching.value = true;
+      }
+    }
+  }
+
+  if (isSearching.value) {
+    pengunjungList = await searchPengunjung(search, currentPage.value);
+  } else {
+    pengunjungList = await getPengunjungPage(currentPage.value);
+  }
   console.log(pengunjungList)
   renderCount.value += 1;
 }
