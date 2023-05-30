@@ -1,17 +1,30 @@
 <template>
   <table data-theme="light" class="table table-compact rounded-lg w-full">
+    <tr class="text-center">
+      <td class="font-bold">No</td>
+      <th class="text-start">Waktu Kunjungan</th>
+      <th class="text-start">Nama</th>
+      <th>Jabatan dan Instansi</th>
+      <th>No. HP</th>
+      <th>No. WA</th>
+      <th>Kategori</th>
+      <th class="text-start">Tujuan</th>
+      <th>Action</th>
+    </tr>
+    <tr>
+      <td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
+      <td><input type="text" placeholder="Type here" v-model="search.waktu_kunjungan" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.keyword" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td class="flex justify-between px-5">
+        <input type="text" placeholder="Type here" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
+        <input type="text" placeholder="Type here" v-model="search.instansi" class="input input-bordered input-sm w-1/2 max-w-xs" />
+      </td>
+      <td><input type="text" placeholder="Type here" v-model="search.no_hp" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Type here" v-model="search.kategori" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td></td>
+    </tr>
     <tbody :key="renderCount">
-      <tr class="text-center">
-        <th>No</th>
-        <th class="text-start">Waktu Kunjungan</th>
-        <th class="text-start">Nama</th>
-        <th>Jabatan dan Instansi</th>
-        <th>No. HP</th>
-        <th>No. WA</th>
-        <th>Kategori</th>
-        <th class="text-start">Tujuan</th>
-        <th>Action</th>
-      </tr>
         <tr v-if="kunjunganList" v-for="(kunjungan, index) in kunjunganList.data" class="hover text-center">
           <div class="hidden">
             {{ pengunjung = kunjungan.pengunjung }}
@@ -44,17 +57,42 @@
 
 <script setup>
 /* ==================== imports ==================== */
-import { onBeforeUnmount, onMounted, ref } from 'vue';
-import { getKunjunganPage } from '../../services/kunjungan';
+import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
+import { getKunjunganPage, searchKunjungan } from '../../services/kunjungan';
 import HapusKunjungan from '../../components/HapusKunjungan.vue';
 
 let intervalId;
 let kunjunganList;
 const renderCount = ref(0);
 const currentPage = ref(1);
+const isSearching = ref(false)
+
+const search = reactive({
+  waktu_kunjungan: null,
+  keyword: null,
+  instansi: null,
+  jabatan: null,
+  email: null,
+  no_hp: null,
+  no_wa: null,
+  kategori: null,
+});
 
 const fetchData = async () => {
-  kunjunganList = await getKunjunganPage(currentPage.value);
+  for (const key of Object.keys(search)) {
+    const element = search[key];
+    if (element !== null) {
+      if (element !== "") {
+        isSearching.value = true;
+      }
+    }
+  }
+
+  if (isSearching.value) {
+    kunjunganList = await searchKunjungan(search, currentPage.value)
+  } else {
+    kunjunganList = await getKunjunganPage(currentPage.value);
+  }
   console.log(kunjunganList)
   renderCount.value += 1;
 }
