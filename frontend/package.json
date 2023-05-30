@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^5.1.2",
+    "date-fns": "^2.30.0",
     "face-api.js": "^0.22.2",
     "vue": "^3.2.47",
     "vue-router": "4"
