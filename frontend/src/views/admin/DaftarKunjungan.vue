@@ -13,16 +13,15 @@
     </tr>
     <tr>
       <td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
-      <td><input type="text" placeholder="Type here" v-model="search.waktu_kunjungan" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td><input type="text" placeholder="Type here" v-model="search.keyword" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td class="flex justify-between px-5">
-        <input type="text" placeholder="Type here" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
-        <input type="text" placeholder="Type here" v-model="search.instansi" class="input input-bordered input-sm w-1/2 max-w-xs" />
+      <td><Datepicker class="rounded-lg" placeholder="Tanggal" v-model="search.waktu_kunjungan" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" /></td>
+      <td><input type="text" placeholder="Nama" v-model="search.keyword" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td class="px-6">
+        <input type="text" placeholder="Jabatan" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
+        <input type="text" placeholder="Instansi" v-model="search.instansi" class="input input-bordered input-sm w-1/2 max-w-xs" />
       </td>
-      <td><input type="text" placeholder="Type here" v-model="search.no_hp" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td><input type="text" placeholder="Type here" v-model="search.kategori" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td></td>
+      <td><input type="text" placeholder="No. HP" v-model="search.no_hp" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="No. Whatsapp" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td><input type="text" placeholder="Kategori" v-model="search.kategori" class="input input-bordered input-sm w-full max-w-xs" /></td>
     </tr>
     <tbody :key="renderCount">
         <tr v-if="kunjunganList" v-for="(kunjungan, index) in kunjunganList.data" class="hover text-center">
@@ -60,12 +59,32 @@
 import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
 import { getKunjunganPage, searchKunjungan } from '../../services/kunjungan';
 import HapusKunjungan from '../../components/HapusKunjungan.vue';
+import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths } from 'date-fns';
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 let intervalId;
 let kunjunganList;
 const renderCount = ref(0);
 const currentPage = ref(1);
 const isSearching = ref(false)
+
+const presetRanges = ref([
+  { 
+    label: 'Hari ini',
+    range: [new Date(), new Date()] },
+  {
+    label: 'Bulan ini',
+    range: [startOfMonth(new Date()), endOfMonth(new Date())]
+  },
+  {
+    label: 'Bulan lalu',
+    range: [startOfMonth(subMonths(new Date(), 1)), endOfMonth(subMonths(new Date(), 1))],
+  },
+  { label: 'Tahun ini',
+    range: [startOfYear(new Date()), endOfYear(new Date())]
+  },
+]);
 
 const search = reactive({
   waktu_kunjungan: null,
