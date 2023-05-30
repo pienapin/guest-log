@@ -12,6 +12,30 @@ class KunjunganController extends Controller
   {
     $query = Kunjungan::with(['pengunjung', 'kategori'])->orderBy('waktu_kunjungan', 'DESC');
 
+    if ($request->keyword) {
+      $query->whereHas('pengunjung', function($q) use ($request) { $q->where('nama', 'LIKE', '%'.$request->keyword.'%'); });
+    }
+
+    if ($request->instansi) {
+      $query->whereHas('pengunjung', function($q) use ($request) { $q->where('instansi', 'LIKE', '%'.$request->instansi.'%'); });
+    }
+
+    if ($request->jabatan) {
+      $query->whereHas('pengunjung', function($q) use ($request) { $q->where('jabatan', 'LIKE', '%'.$request->jabatan.'%'); });
+    }
+
+    if ($request->no_hp) {
+      $query->whereHas('pengunjung', function($q) use ($request) { $q->where('no_hp', 'LIKE', '%'.$request->no_hp.'%'); });
+    }
+
+    if ($request->no_wa) {
+      $query->whereHas('pengunjung', function($q) use ($request) { $q->where('no_wa', 'LIKE', '%'.$request->no_wa.'%'); });
+    }
+
+    if ($request->kategori) {
+      $query->whereHas('kategori', function($q) use ($request) { $q->where('kategori', 'LIKE', '%'.$request->kategori.'%'); });
+    }
+
     if ($request->perPage) {
       $perPage = $request->perPage;
     } else {
