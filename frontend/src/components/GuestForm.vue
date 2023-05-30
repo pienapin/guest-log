@@ -194,12 +194,10 @@ const submit = () => {
             waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
           }
         )
-        .then((result) => {
-          document.getElementsByClassName("alert")[0].classList.remove("hidden")
-        });
       });
-  }
-  emit('close');
+    }
+    document.getElementById("submitSuccess").classList.remove("hidden")
+    emit('close');
 }
 </script>
 

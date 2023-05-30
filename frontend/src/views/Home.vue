@@ -1,5 +1,11 @@
 <template>
   <div class="min-h-screen grid auto-rows-max gap-0 grid-flow-row content-between bg-gray-100">
+    <div id="submitSuccess" class="alert alert-success w-[90%] justify-center mx-auto absolute left-0 right-0 top-5 shadow-lg hidden">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span class="font-medium text-lg">Kunjungan anda telah tercatat! Terima kasih sudah berkunjung! Selamat datang di BPS Provinsi Riau!</span>
+      </div>
+    </div>
     <!-- Navbar -->
     <div>
       <div class="navbar md:py-10 pt-5">
@@ -123,6 +129,7 @@ const startPolling = () => {
   fetchData();
   intervalId = setInterval(() => {
     fetchData();
+    document.getElementById("submitSuccess").classList.add("hidden")
   }, 5000);
 }
 
