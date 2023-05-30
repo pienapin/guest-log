@@ -20,6 +20,14 @@ class PengunjungController extends Controller
       $query->where('instansi', 'LIKE', '%'.$request->instansi.'%');
     }
 
+    if ($request->jabatan) {
+      $query->where('jabatan', 'LIKE', '%'.$request->jabatan.'%');
+    }
+
+    if ($request->email) {
+      $query->where('email', 'LIKE', '%'.$request->email.'%');
+    }
+
     if ($request->no_hp) {
       $query->where('no_hp', 'LIKE', '%'.$request->no_hp.'%');
     }
