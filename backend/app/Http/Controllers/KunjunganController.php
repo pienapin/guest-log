@@ -36,6 +36,11 @@ class KunjunganController extends Controller
       $query->whereHas('kategori', function($q) use ($request) { $q->where('kategori', 'LIKE', '%'.$request->kategori.'%'); });
     }
 
+    if ($request->waktu_kunjungan) {
+      $waktu = explode("_", $request->waktu_kunjungan);
+      $query->where('waktu_kunjungan', '>=', $waktu[0].' 00:00:00')->where('waktu_kunjungan', '<=', $waktu[1].' 23:59:59');
+    }
+
     if ($request->perPage) {
       $perPage = $request->perPage;
     } else {
