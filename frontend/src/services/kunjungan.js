@@ -16,6 +16,21 @@ export async function getKunjunganPage(page) {
   return response.data;
 }
 
+export async function searchKunjungan(body, page) {
+  let params = ""
+  if (body.keyword) params += `&keyword=${body.keyword}`
+  if (body.instansi) params += `&instansi=${body.instansi}`
+  if (body.jabatan) params += `&jabatan=${body.jabatan}`
+  if (body.email) params += `&email=${body.email}`
+  if (body.no_wa) params += `&no_wa=${body.no_wa}`
+  if (body.no_hp) params += `&no_hp=${body.no_hp}`
+  if (body.kategori) params += `&kategori=${body.kategori}`
+  const response = await baseApi
+    .get(`${api}?perPage=15&paginate=1&page=${page}${params}`);
+    
+  return response.data;
+}
+
 export async function addKunjungan(body) {
   const response = await baseApi
     .post(`${api}/submit`, body);
