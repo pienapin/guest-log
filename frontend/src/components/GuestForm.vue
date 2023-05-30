@@ -8,7 +8,7 @@
         <label class="btn btn-xs btn-error btn-circle absolute right-2 top-2" @click="$emit('close')"></label>
       </div>
       <form @submit.prevent="submit" id="guest-form" class="form-control ff-roboto">
-        <div class="overflow-y-auto max-xl:h-[450px] max-xl:px-3">
+        <div class="overflow-y-auto max-h-[450px] max-xl:max-h-[500px] px-3">
           <div class="grid sm:grid-cols-2 max-sm:grid-rows-2 sm:gap-10 mb-3">
             <div>
               <label class="label label-text">Nama Lengkap Pengunjung</label>
@@ -194,8 +194,17 @@ const submit = () => {
             waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
           }
         )
+        .then((result) => {
+          document.getElementsByClassName("alert")[0].classList.remove("hidden")
+        });
       });
   }
   emit('close');
 }
 </script>
+
+<style scoped>
+.modal-box {
+  max-height: calc(100vh - 3em);
+}
+</style>
