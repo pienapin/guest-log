@@ -25,6 +25,7 @@ export async function searchKunjungan(body, page) {
   if (body.no_wa) params += `&no_wa=${body.no_wa}`
   if (body.no_hp) params += `&no_hp=${body.no_hp}`
   if (body.kategori) params += `&kategori=${body.kategori}`
+  if (body.waktu_kunjungan) params += `&waktu_kunjungan=${body.waktu_kunjungan[0]}_${body.waktu_kunjungan[1]}`
   const response = await baseApi
     .get(`${api}?perPage=15&paginate=1&page=${page}${params}`);
     
