@@ -29,7 +29,7 @@
             {{ pengunjung = kunjungan.pengunjung }}
             {{ kategori = kunjungan.kategori }}
           </div>
-          <th>{{ index + 1 }}</th>
+          <th>{{ index + 1 + ((currentPage-1) * perPage) }}</th>
           <td class="text-start">{{ kunjungan.waktu_kunjungan }}</td>
           <td class="text-start">{{ pengunjung.nama }}</td>
           <td>{{ pengunjung.jabatan }} di {{ pengunjung.instansi }}</td>
@@ -67,6 +67,7 @@ let intervalId;
 let kunjunganList;
 const renderCount = ref(0);
 const currentPage = ref(1);
+const perPage = ref(15);
 const isSearching = ref(false)
 
 const presetRanges = ref([

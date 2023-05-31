@@ -22,7 +22,7 @@
     </tr>
     <tbody :key="renderCount">
         <tr v-if="pengunjungList" v-for="(pengunjung, index) in pengunjungList.data" class="hover text-center">
-          <th>{{ index+1 }}</th>
+          <th>{{ index + 1 + ((currentPage-1) * perPage)  }}</th>
             <td class="text-start">{{ pengunjung.nama }}</td>
             <td>{{ pengunjung.instansi }}</td>
             <td>{{ pengunjung.jabatan }}</td>
@@ -62,6 +62,7 @@ let intervalId;
 let pengunjungList;
 const renderCount = ref(0);
 const currentPage = ref(1);
+const perPage = ref(15);
 const isSearching = ref(false)
 
 const search = reactive({
