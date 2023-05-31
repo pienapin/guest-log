@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
-      <td><Datepicker class="rounded-lg" placeholder="Tanggal" v-model="search.waktu_kunjungan" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" /></td>
+      <td><Datepicker placeholder="Tanggal" v-model="search.waktu_kunjungan" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" /></td>
       <td><input type="text" placeholder="Nama" v-model="search.keyword" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td class="px-6">
         <input type="text" placeholder="Jabatan" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
@@ -142,3 +142,10 @@ const stopPolling = () => {
   clearInterval(intervalId);
 }
 </script>
+
+<style scoped>
+  * {
+    --dp-border-radius: .6rem;
+    --dp-font-size: .875rem;
+  }
+</style>
