@@ -38,7 +38,12 @@ class KunjunganController extends Controller
 
     if ($request->waktu_kunjungan) {
       $waktu = explode("_", $request->waktu_kunjungan);
-      $query->where('waktu_kunjungan', '>=', $waktu[0].' 00:00:00')->where('waktu_kunjungan', '<=', $waktu[1].' 23:59:59');
+      if ($waktu[1] == "null") {
+        $waktu1 = $waktu[0];
+      } else {
+        $waktu1 = $waktu[1];
+      }
+      $query->where('waktu_kunjungan', '>=', $waktu[0].' 00:00:00')->where('waktu_kunjungan', '<=', $waktu1.' 23:59:59');
     }
 
     if ($request->perPage) {
