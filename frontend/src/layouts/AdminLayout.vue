@@ -12,25 +12,25 @@
       <ul class="menu w-56 p-2">
         <li class="hover:bg-gray-200 rounded-md" :class="{ 'bg-gray-700 text-slate-100 hover:bg-gray-700': title === 'Dashboard' }">
           <router-link to="/admin" class="w-full active:bg-gray-700 text-center py-4">
-            <i class="fa-solid fa-house"></i>
+            <i class="fa-solid fa-house fa-lg"></i>
               Dashboard
           </router-link>
         </li>
         <li class="hover:bg-gray-200 rounded-md" :class="{ 'bg-gray-700 text-slate-100 hover:bg-gray-700': title === 'Daftar Pengunjung' }">
           <router-link to="/admin/daftar-pengunjung" class="w-full active:bg-gray-700 text-center py-4">
-            <i class="fa-solid fa-users"></i>
+            <i class="fa-solid fa-address-book fa-lg"></i>
               Daftar Pengunjung
           </router-link>
         </li>
         <li class="hover:bg-gray-200 rounded-md" :class="{ 'bg-gray-700 text-slate-100 hover:bg-gray-700': title === 'Daftar Kunjungan' }">
           <router-link to="/admin/daftar-kunjungan" class="w-full active:bg-gray-700 text-center py-4">
-            <i class="fa-solid fa-building-circle-check"></i>
+            <i class="fa-solid fa-building-circle-check fa-lg"></i>
               Daftar Kunjungan
           </router-link>
         </li>
         <li class="hover:bg-gray-200 rounded-md" :class="{ 'bg-gray-700 text-slate-100 hover:bg-gray-700': title === 'Daftar Pengguna' }">
           <router-link to="/admin/daftar-pengguna" class="w-full active:bg-gray-700 text-center py-4">
-            <i class="fa-solid fa-users"></i>
+            <i class="fa-solid fa-users fa-lg"></i>
               Daftar Pengguna
           </router-link>
         </li>
