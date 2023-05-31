@@ -28,6 +28,12 @@
               Daftar Kunjungan
           </router-link>
         </li>
+        <li class="hover:bg-gray-200 rounded-md" :class="{ 'bg-gray-700 text-slate-100 hover:bg-gray-700': title === 'Daftar Pengguna' }">
+          <router-link to="/admin/daftar-pengguna" class="w-full active:bg-gray-700 text-center py-4">
+            <i class="fa-solid fa-users"></i>
+              Daftar Pengguna
+          </router-link>
+        </li>
       </ul>
     </div>
   
