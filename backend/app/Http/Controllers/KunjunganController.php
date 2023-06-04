@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kunjungan;
+use App\Models\Pelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,6 +87,10 @@ class KunjunganController extends Controller
       'kategori_id' => $request->kategori_id,
       'waktu_kunjungan' => $request->waktu_kunjungan
     ]);
+
+    if ($request->kategori_id == 1) {
+      $pelayanan = Pelayanan::create(['kunjungan_id', $kunjungan->id]);
+    }
 
     return response()->json([
       'message' => 'Kunjungan information is succesfully stored',
