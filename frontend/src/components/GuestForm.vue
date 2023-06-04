@@ -61,7 +61,6 @@
             <label class="label label-text">Kategori Kunjungan</label>
             <select class="select select-bordered w-full font-normal" v-model="form.kategori_id" required>
               <option disabled selected value="0">Pilih Kategori Kunjungan</option>
-              <option value="1">Umum</option>
               <option v-for="kat in kategori" :value="kat.id">{{ kat.kategori }}</option>
             </select>
           </div>
