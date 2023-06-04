@@ -6,6 +6,7 @@ import Dashboard from "@/views/admin/Dashboard.vue";
 import DaftarPengunjung from "@/views/admin/DaftarPengunjung.vue";
 import DaftarKunjungan from "@/views/admin/DaftarKunjungan.vue";
 import DaftarPengguna from "@/views/admin/DaftarPengguna.vue";
+import DaftarPelayanan from "@/views/admin/DaftarPelayanan.vue";
 
 const routes = [
   {
@@ -49,7 +50,14 @@ const routes = [
         meta: {
           title: "Daftar Pengguna",
         },
-      }
+      },
+      {
+        path: "daftar-pelayanan",
+        component: DaftarPelayanan,
+        meta: {
+          title: "Daftar Pelayanan",
+        },
+      },
     ],
   }
 ];

@@ -34,6 +34,12 @@
               Daftar Pengguna
           </router-link>
         </li>
+        <li class="hover:bg-gray-200 rounded-md" :class="{ 'bg-gray-700 text-slate-100 hover:bg-gray-700': title === 'Daftar Pelayanan' }">
+          <router-link to="/admin/daftar-pelayanan" class="w-full active:bg-gray-700 text-center py-4">
+            <i class="fa-solid fa-couch fa-lg"></i>
+              Daftar Pelayanan
+          </router-link>
+        </li>
       </ul>
     </div>
   
