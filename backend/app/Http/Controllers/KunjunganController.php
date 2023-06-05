@@ -89,7 +89,7 @@ class KunjunganController extends Controller
     ]);
 
     if ($request->kategori_id == 1) {
-      $pelayanan = Pelayanan::create(['kunjungan_id', $kunjungan->id]);
+      $pelayanan = Pelayanan::create(['kunjungan_id' => $kunjungan->id]);
     }
 
     return response()->json([
