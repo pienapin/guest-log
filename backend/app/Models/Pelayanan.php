@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Kunjungan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pelayanan extends Model
 {
@@ -18,4 +19,12 @@ class Pelayanan extends Model
         'status_layanan',
         'keterangan_pelayanan',
     ];
+
+    public function kunjungan() {
+      return $this->belongsTo(Kunjungan::class);
+    }
+
+    public function user() {
+      return $this->belongsTo(User::class, 'petugas_id');
+    }
 }

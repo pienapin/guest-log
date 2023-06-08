@@ -16,14 +16,14 @@ return new class extends Migration
             $table->foreignId('kunjungan_id')
                 ->nullable()
                 ->constrained('kunjungan')
-                ->nullOnDelete();
+                ->cascadeOnDelete();
             $table->foreignId('petugas_id')
                 ->nullable()
                 ->constrained('users')
                 ->nullOnDelete();
             $table->string('data_diminta')->nullable();
             $table->string('dokumentasi')->nullable();
-            $table->enum('status_layanan', ['Terlayani', 'Terlayani Sebagian', 'Tidak Terlayani'])->nullable();
+            $table->enum('status_layanan', ['Terlayani', 'Terlayani Sebagian', 'Tidak Terlayani', 'Belum didokumentasi'])->nullable()->default('Belum didokumentasi');
             $table->longText('keterangan_pelayanan')->nullable();
             $table->timestamps();
         });
