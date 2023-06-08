@@ -21,7 +21,7 @@
       <td></td>
     </tr>
     <tbody :key="renderCount">
-        <tr v-if="pengunjungList" v-for="(pengunjung, index) in pengunjungList.data" class="hover text-center">
+        <tr v-if="pengunjungList && pengunjungList.data.length > 0" v-for="(pengunjung, index) in pengunjungList.data" class="hover text-center">
           <th>{{ index + 1 + ((currentPage-1) * perPage)  }}</th>
             <td class="text-start">{{ pengunjung.nama }}</td>
             <td>{{ pengunjung.instansi }}</td>
@@ -40,6 +40,9 @@
               </label>
               <HapusPengunjung :poll="startPolling" :pengunjung="pengunjung"></HapusPengunjung>
             </td>
+          </tr>
+          <tr v-else>
+            <td colspan="8" class="text-center">Data belum tersedia</td>
           </tr>
     </tbody>
   </table>

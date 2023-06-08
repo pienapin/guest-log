@@ -24,7 +24,7 @@
       <td><input type="text" placeholder="Kategori" v-model="search.kategori" class="input input-bordered input-sm w-full max-w-xs" /></td>
     </tr>
     <tbody :key="renderCount">
-        <tr v-if="kunjunganList" v-for="(kunjungan, index) in kunjunganList.data" class="hover text-center">
+        <tr v-if="kunjunganList && kunjunganList.data.length > 0" v-for="(kunjungan, index) in kunjunganList.data" class="hover text-center">
           <div class="hidden">
             {{ pengunjung = kunjungan.pengunjung }}
             {{ kategori = kunjungan.kategori }}
@@ -44,6 +44,9 @@
             </label>
             <HapusKunjungan :poll="startPolling" :kunjungan="kunjungan"></HapusKunjungan>
           </td>
+        </tr>
+        <tr v-else>
+          <td colspan="9" class="text-center">Data belum tersedia</td>
         </tr>
     </tbody>
   </table>
