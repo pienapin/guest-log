@@ -59,8 +59,8 @@
   /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { getUserPage, searchUser } from '@/services/user'
-import EditPengguna from '@/components/EditPengguna';
-import HapusPengguna from '@/components/HapusPengguna';
+import EditPengguna from '@/components/EditPengguna.vue';
+import HapusPengguna from '@/components/HapusPengguna.vue';
 
 let intervalId;
 let userList;
