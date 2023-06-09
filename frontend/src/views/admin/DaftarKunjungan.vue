@@ -15,7 +15,7 @@
       <td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
       <td><Datepicker placeholder="Tanggal" v-model="search.waktu_kunjungan" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" /></td>
       <td><input type="text" placeholder="Nama" v-model="search.keyword" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td class="px-6">
+      <td class="px-6 flex">
         <input type="text" placeholder="Jabatan" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
         <input type="text" placeholder="Instansi" v-model="search.instansi" class="input input-bordered input-sm w-1/2 max-w-xs" />
       </td>
@@ -30,7 +30,7 @@
             {{ kategori = kunjungan.kategori }}
           </div>
           <th>{{ index + 1 + ((currentPage-1) * perPage) }}</th>
-          <td class="text-start">{{ kunjungan.waktu_kunjungan }}</td>
+          <td class="text-center">{{ kunjungan.waktu_kunjungan }}</td>
           <td class="text-start">{{ pengunjung.nama }}</td>
           <td>{{ pengunjung.jabatan }} di {{ pengunjung.instansi }}</td>
           <td>{{ pengunjung.no_hp }}</td>
@@ -50,10 +50,26 @@
         </tr>
     </tbody>
   </table>
-  <div v-if="kunjunganList" class="btn-group w-full justify-center mt-5">
-    <button v-if="kunjunganList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
-    <button class="btn">Page {{ kunjunganList.current_page }} of {{ kunjunganList.last_page }}</button>
-    <button v-if="kunjunganList.next_page_url" class="btn" @click="currentPage += 1">»</button>
+  <div v-if="kunjunganList" class="w-full justify-between mt-5 flex">
+    <div></div>
+    <div class="btn-group">
+      <button v-if="kunjunganList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
+      <button class="btn">Page {{ kunjunganList.current_page }} of {{ kunjunganList.last_page }}</button>
+      <button v-if="kunjunganList.next_page_url" class="btn" @click="currentPage += 1">»</button>
+    </div>
+    <div>
+      <button class="btn" onclick="my_modal_1.showModal()">open modal</button>
+      <dialog id="my_modal_1" class="modal">
+        <form method="dialog" class="modal-box">
+          <h3 class="font-bold text-lg">Hello!</h3>
+          <p class="py-4">Press ESC key or click the button below to close</p>
+          <div class="modal-action">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </div>
+        </form>
+      </dialog>
+    </div>
   </div>
 </template>
 
