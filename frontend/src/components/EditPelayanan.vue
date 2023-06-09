@@ -52,6 +52,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
+import useAuthStore from '../stores/auth';
 import { editPelayanan } from '../services/pelayanan';
 
 const dok = ref(null)
@@ -63,7 +64,7 @@ const props = defineProps({
 
 const form = reactive({
   id: props.pelayanan.id,
-  petugas_id: 1,
+  petugas_id: useAuthStore().user.id,
   data_diminta: props.pelayanan.data_diminta,
   dokumentasi: null,
   status_layanan: props.pelayanan.status,
