@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getCookies, delCookies } from './cookies';
 
 // Restful API Config
 axios.defaults.headers['Content-Type'] = 'application/json';
@@ -14,6 +15,12 @@ const baseApi = axios.create({
 // Request Config
 baseApi.interceptors.request.use(
   (config) => {
+    const token = getCookies('CERT');
+    if (token) config.headers['Authorization'] = `Bearer ${token}`;
+    else {
+      delCookies('CERT');
+      delete config.headers['Authorization'];
+    }
     return config;
   },
   (error) => {
@@ -25,6 +32,14 @@ baseApi.interceptors.request.use(
 baseApi.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    switch (error.status) {
+      case 401:
+        delCookies('CERT');
+        break;
+
+      default:
+        break;
+    }
     throw error?.response?.error ?? error?.response?.message ?? error;
   },
 );

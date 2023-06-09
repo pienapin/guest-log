@@ -20,7 +20,7 @@
         <td><Datepicker placeholder="Tanggal" v-model="search.waktu_kunjungan" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" /></td>
         <td><input type="text" placeholder="Petugas" v-model="search.petugas" class="input input-bordered input-sm w-full max-w-xs" /></td>
         <td><input type="text" placeholder="Nama" v-model="search.pengunjung" class="input input-bordered input-sm w-full max-w-xs" /></td>
-        <td class="px-6">
+        <td class="px-6 flex">
           <input type="text" placeholder="Jabatan" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
           <input type="text" placeholder="Instansi" v-model="search.instansi" class="input input-bordered input-sm w-1/2 max-w-xs" />
         </td>
@@ -73,7 +73,6 @@
 <script setup>
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
-// import { getKunjunganPage, searchKunjungan } from '../../services/kunjungan';
 import ImageModal from '../../components/ImageModal.vue';
 import EditPelayanan from "../../components/EditPelayanan.vue";
 import { getPelayananPage, getDokumentasiImg, searchPelayanan } from '../../services/pelayanan';
@@ -88,7 +87,6 @@ const currentPage = ref(1);
 const perPage = ref(15);
 const isSearching = ref(false);
 const imageUrl = ref(null);
-
 
 const presetRanges = ref([
   { 

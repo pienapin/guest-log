@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen h-screen flex bg-gray-100">
     <!-- Sidebar -->
-    <div class="card w-[240px] mx-3 my-3 bg-gray-50 drop-shadow-md hidden lg:block">
+    <div class="card w-[240px] mx-3 my-3 bg-gray-50 drop-shadow-md hidden lg:flex">
       <!-- Sidebar Header -->
       <div class="flex my-8 me-3 justify-center">
         <img class="w-10 mx-2" src="@/assets/img/bps-logo.png">
@@ -41,6 +41,7 @@
           </router-link>
         </li>
       </ul>
+      <button class="btn btn-error mt-auto mx-6 mb-6" @click="logout">Log out</button>
     </div>
   
     <!-- Main Section -->
@@ -63,9 +64,6 @@
                   <i class="fa-solid fa-user my-auto"></i>
                 </div>
             </label>
-            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a class="btn btn-md btn-error">Log out</a></li>
-            </ul>
           </div>
         </div>
 
@@ -84,7 +82,18 @@
 </template>
 
 <script setup>
+import useAuthStore from '../stores/auth';
+import { useRouter } from 'vue-router';
+
 const props = defineProps({
   title: String,
-})
+});
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+const logout = async () => {
+  await authStore.logout();
+  router.replace({ name: 'Login' });
+}
 </script>
