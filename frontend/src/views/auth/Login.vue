@@ -14,11 +14,11 @@
       </div>
       <div class="w-1/2 pl-12 flex items-center justify-center">
           <div class="w-full">
-            <h3 class="text-center font-bold text-xl px-20 uppercase">Sign In</h3>
-            <form action="" method="POST" class="signin-form">
+            <h3 class="text-center font-bold text-xl px-20 uppercase mb-3">Sign In</h3>
+            <form @submit.prevent="handleLogin" method="POST" class="signin-form">
               <div>
                 <label class="label label-text" for="email">Nomor Induk Pegawai</label>
-                <input id="nip" type="text" class="input input-bordered input-md w-full" v-model="nip"
+                <input id="nip" type="text" class="input input-bordered input-md w-full" v-model="form.nip"
                 required autofocus>
               </div>
               <button type="submit" class="btn mt-5 w-full">Masuk</button>
@@ -31,9 +31,31 @@
 
 <script setup>
 import { reactive } from 'vue';
-
+import { useRouter } from 'vue-router';
+import useAuthStore from '@/stores/auth';
 
 const form = reactive({
   nip: null,
 });
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const handleLogin = async () => {
+  try {
+        await authStore.login(form);
+        console.log('handleLogin ' + JSON.stringify(authStore.user))
+        if (authStore.user.role_id == 1) {
+          router.replace({ name: "admin-dashboard" });
+        }
+        if (authStore.user.role_id == 2) {
+          router.replace({ name: "kepala-dashboard" });
+        }
+        if (authStore.user.role_id == 3) {
+          router.replace({ name: "pst-dashboard" });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+}
 </script>
