@@ -106,9 +106,7 @@ onMounted(() => {
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceExpressionNet.loadFromUri('/models'),
     faceapi.nets.ssdMobilenetv1.loadFromUri('/models')
-  ]).then(() => {
-    console.log('Models loaded')
-  });
+  ]).then(() => {});
 });
 
 onBeforeUnmount(() => {
@@ -142,7 +140,6 @@ const stopPolling = () => {
 // and recognize the face captured
 const detectFace = async () => {
   stopPolling();
-  console.log('detecting...');
   const video = videoRef.value;
   const canvas = canvasRef.value;
 
@@ -180,7 +177,6 @@ const detectFace = async () => {
     }
 
     if (result && result.toString(false) != "unknown") {
-      console.log('Result Exists!');
 
       const index = pengunjungList.findIndex(pengunjung => {
         return pengunjung.id === parseInt(result.toString(false))
@@ -189,11 +185,9 @@ const detectFace = async () => {
       pengunjung.value = pengunjungList[index];
       
     } else {
-      console.log("Result Doesn't Exist!");
       pengunjung.value = null;
       detected.value = detectedJSON;
     }
-    console.log(pengunjung.value);
     showForm();
   } else {
     alert('No face');

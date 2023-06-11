@@ -2,13 +2,12 @@
   <table data-theme="light" class="table table-compact rounded-lg w-full">
     <tr class="text-center">
       <th>No</th>
-      <th class="text-start">Nama</th>
+      <th>Nama</th>
       <th>Instansi</th>
       <th>Jabatan</th>
       <th>Email</th>
       <th>No. HP</th>
       <th>No. WA</th>
-      <th>Action</th>
     </tr>
     <tr>
       <th class="text-center"><i class="fa-solid fa-magnifying-glass"></i></th>
@@ -29,17 +28,6 @@
             <td>{{ pengunjung.email }}</td>
             <td>{{ pengunjung.no_hp }}</td>
             <td><a :href="'https://wa.me/'+pengunjung.no_wa">{{ pengunjung.no_wa }}</a></td>
-            <td class="text-center">
-              <label :for="'edit_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
-                <i class="fa-solid fa-pen"></i>
-              </label>
-              <EditPengunjung :poll="startPolling"  :pengunjung="pengunjung"></EditPengunjung>
-    
-              <label :for="'hapus_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-error text-base-100 btn-square min-h-0 h-8 w-8 p-0 text-xs">
-                <i class="fa-solid fa-trash"></i>
-              </label>
-              <HapusPengunjung :poll="startPolling" :pengunjung="pengunjung"></HapusPengunjung>
-            </td>
           </tr>
           <tr v-else>
             <td colspan="8" class="text-center">Data belum tersedia</td>
@@ -57,8 +45,6 @@
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { getPengunjungPage, searchPengunjung } from '@/services/pengunjung'
-import HapusPengunjung from '../../components/HapusPengunjung.vue';
-import EditPengunjung from '../../components/EditPengunjung.vue';
 
 
 let intervalId;

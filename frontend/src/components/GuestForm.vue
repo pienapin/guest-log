@@ -171,7 +171,6 @@ document.addEventListener('keyup', escapeToClose, true);
 
 // for submitting form
 const submit = () => {
-  console.log(form);
   if (form.isExists === true) {
     addKunjungan(
       {
@@ -184,7 +183,6 @@ const submit = () => {
   } else {
     addPengunjung(form)
       .then((result) => {
-        console.log(result);
         addKunjungan(
           {
             pengunjung_id: result.id,

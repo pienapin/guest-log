@@ -82,9 +82,7 @@ const form = reactive({
 
 function edit() {
   addPengunjung(form)
-    .then((result) => {
-      console.log(result);
-    })
+    .then((result) => {})
   props.poll()
 }
 

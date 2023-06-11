@@ -73,15 +73,11 @@ const form = reactive({
 
 function edit() {
   editPelayanan(form)
-    .then((result) => {
-      console.log(result);
-    })
+    .then((result) => {})
   props.poll()
 }
 
 function onFileChange() {
-  console.log("selected file ", dok.value.files[0])
   form.dokumentasi = dok.value.files[0]
-  console.log("selected file on form ", form.dokumentasi)
 }
 </script>

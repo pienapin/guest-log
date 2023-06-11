@@ -48,7 +48,7 @@
           </tr>
     </tbody>
   </table>
-  <div v-if="userList" class="btn-group w-full justify-center mt-5">
+  <div v-if="userList" class="join w-full justify-center mt-5">
     <button v-if="userList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
     <button class="btn">Page {{ userList.current_page }} of {{ userList.last_page }}</button>
     <button v-if="userList.next_page_url" class="btn" @click="currentPage += 1">»</button>
@@ -79,11 +79,6 @@ const search = reactive({
 const fetchData = async () => {
   for (const key of Object.keys(search)) {
     const element = search[key];
-    console.log(key)
-    console.log(element)
-    console.log(element !== null)
-    console.log(element !== "")
-    console.log(isSearching)
     if (element !== null) {
       if (element !== "") {
         isSearching.value = true;
@@ -96,7 +91,6 @@ const fetchData = async () => {
   } else {
     userList = await getUserPage(currentPage.value);
   }
-  console.log(userList)
   renderCount.value += 1;
 }
 

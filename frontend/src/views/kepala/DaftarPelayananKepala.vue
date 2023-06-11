@@ -13,7 +13,6 @@
         <th>Keterangan Pelayanan</th>
         <th>Dokumentasi</th>
         <th>Status</th>
-        <th>Action</th>
       </tr>
       <tr>
         <td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
@@ -49,12 +48,6 @@
             <td><label class="cursor-pointer hover:text-cyan-600" :for="pelayanan.dokumentasi" @click="getImage(pelayanan.dokumentasi)">{{ pelayanan.dokumentasi }}</label></td>
             <td class="text-center" v-if="pelayanan.status_layanan != 'Belum didokumentasi'">{{ pelayanan.status_layanan }}</td>
             <td class="text-center font-bold text-red-500" v-else>Belum<br/>didokumentasi</td>
-            <td class="text-center">
-              <label :for="'edit_'+pelayanan.id" @click="stopPolling" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
-                  <i class="fa-solid fa-pen"></i>
-                </label>
-                <EditPelayanan :poll="startPolling" :pelayanan="pelayanan"></EditPelayanan>
-            </td>
             <ImageModal :file-name="pelayanan.dokumentasi" :url="imageUrl" :poll="startPolling"></ImageModal>
           </tr>
           <tr v-else>

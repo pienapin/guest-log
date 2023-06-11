@@ -27,9 +27,7 @@ const props = defineProps({
 
 function hapus() {
   delPengunjung(props.pengunjung.id)
-  .then((result) => {
-      console.log(result);
-    });
+  .then((result) => {});
   props.poll()
 }
   </script>

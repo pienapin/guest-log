@@ -19,7 +19,6 @@ const delCookies = (name) => {
 
 const certCookies = () => {
   const token = getCookies('CERT');
-  console.log('certCookies ' + token);
   if (token) {
     return me()
       .then((res) => {

@@ -44,7 +44,6 @@ const authStore = useAuthStore();
 const handleLogin = async () => {
   try {
         await authStore.login(form);
-        console.log('handleLogin ' + JSON.stringify(authStore.user))
         if (authStore.user.role_id == 1) {
           router.replace({ name: "admin-dashboard" });
         }

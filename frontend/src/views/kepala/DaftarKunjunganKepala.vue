@@ -2,14 +2,13 @@
   <table data-theme="light" class="table table-compact rounded-lg w-full">
     <tr class="text-center">
       <td class="font-bold">No</td>
-      <th class="text-start">Waktu Kunjungan</th>
-      <th class="text-start">Nama</th>
+      <th>Waktu Kunjungan</th>
+      <th>Nama</th>
       <th>Jabatan dan Instansi</th>
       <th>No. HP</th>
       <th>No. WA</th>
       <th>Kategori</th>
-      <th class="text-start">Tujuan</th>
-      <th>Action</th>
+      <th>Tujuan</th>
     </tr>
     <tr>
       <td class="text-center"><i class="fa-solid fa-magnifying-glass"></i></td>
@@ -37,13 +36,6 @@
           <td>{{ pengunjung.no_wa }}</td>
           <td>{{ kategori.kategori }}</td>
           <td class="text-justify whitespace-normal">{{ kunjungan.tujuan }}</td>
-          <td class="text-center">
-            <label :for="'hapus_' + kunjungan.id" @click="stopPolling"
-              class="btn mx-1 btn-error text-base-100 btn-square min-h-0 h-8 w-8 p-0 text-xs">
-              <i class="fa-solid fa-trash"></i>
-            </label>
-            <HapusKunjungan :poll="startPolling" :kunjungan="kunjungan"></HapusKunjungan>
-          </td>
         </tr>
         <tr v-else>
           <td colspan="9" class="text-center">Data belum tersedia</td>
@@ -77,7 +69,6 @@
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
 import { getKunjunganPage, searchKunjungan } from '../../services/kunjungan';
-import HapusKunjungan from '../../components/HapusKunjungan.vue';
 import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths } from 'date-fns';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
