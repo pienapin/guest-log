@@ -29,7 +29,7 @@
             <td>{{ pengunjung.email }}</td>
             <td>{{ pengunjung.no_hp }}</td>
             <td><a :href="'https://wa.me/'+pengunjung.no_wa">{{ pengunjung.no_wa }}</a></td>
-            <td class="text-center">
+            <td class="text-center flex">
               <label :for="'edit_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
                 <i class="fa-solid fa-pen"></i>
               </label>
