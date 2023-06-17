@@ -201,16 +201,16 @@ router.beforeEach(async (to, from, next) => {
     }
     return
   } else if (to.meta.guest) {
-    if (!user) next();
+    if (!user) {next(); return}
+    
     else {
       if (user.role_id == 1) {next({ name: 'admin-dashboard' });return}
       if (user.role_id == 2) {next({ name: 'kepala-dashboard' });return}
       if (user.role_id == 3) {next({ name: 'pst-dashboard'});return}
     }
-  } else {
-    next();
-    return
   }
+  next()
+  return
 
 });
 
