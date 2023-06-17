@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Kategori;
 use App\Models\Kunjungan;
 use App\Models\Pelayanan;
 use Illuminate\Http\Request;
@@ -108,4 +110,43 @@ class KunjunganController extends Controller
       'message' => 'kunjungan is successfully deleted',
     ], 200);
   }
+
+  public function count()
+  {
+    $kategori = Kategori::get();
+    $data = array();
+    
+    //get count
+    $kategori_jumlah = array();
+    foreach ($kategori as $k) {
+      $kunjungan = count(Kunjungan::where('kategori_id', $k->id)->get());
+      array_push($kategori_jumlah, $kunjungan);
+    }
+
+    $kategori_label = array();
+    foreach ($kategori as $k) {
+      array_push($kategori_label, $k->kategori);
+    }
+
+    $data['kategori_jumlah'] = $kategori_jumlah;
+    $data['kategori_label'] = $kategori_label;
+
+    $kunjungan_pekan_ini = Kunjungan::whereBetween('waktu_kunjungan', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+    $data['jumlah_pekan_ini'] = count($kunjungan_pekan_ini);
+    
+    $kunjungan_hari_ini = Kunjungan::whereDate('waktu_kunjungan', Carbon::today())->get();
+    $data['jumlah_hari_ini'] = count($kunjungan_hari_ini);
+    
+    $kunjungan_bulan_ini = Kunjungan::whereMonth('waktu_kunjungan', Carbon::today()->month)->get();
+    $data['jumlah_bulan_ini'] = count($kunjungan_bulan_ini);
+
+    $kunjungan_tahun_ini = Kunjungan::whereYear('waktu_kunjungan', Carbon::today()->year)->get();
+    $data['jumlah_tahun_ini'] = count($kunjungan_tahun_ini);
+
+    return response()->json([
+      'message' => 'kunjungan count is successfully fetched',
+      'data' => $data,
+    ], 200);
+  }
+
 }

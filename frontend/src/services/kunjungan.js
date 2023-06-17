@@ -45,3 +45,10 @@ export async function delKunjungan(body) {
     
   return response.message;
 }
+
+export async function countKunjungan() {
+  const response = await baseApi
+    .get(`${api}/count`);
+    
+  return response.data;
+}

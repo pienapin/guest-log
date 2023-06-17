@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
@@ -41,6 +40,7 @@ Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
 Route::post('/pengunjung/delete/{id}', [PengunjungController::class, 'del']);
 
 Route::get('/kunjungan', [KunjunganController::class, 'list']);
+Route::get('/kunjungan/count', [KunjunganController::class, 'count']);
 Route::post('/kunjungan/submit', [KunjunganController::class, 'submit']);
 Route::delete('/kunjungan/delete/{id}', [KunjunganController::class, 'del']);
 
