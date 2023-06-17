@@ -22,8 +22,8 @@ const certCookies = () => {
   if (token) {
     return me()
       .then((res) => {
-        const user = res
-        if (!user) return delCookies('CERT');
+        const user = res;
+        if (!user || Object.keys(user).length === 0) return delCookies('CERT');
         return user;
       });
   }
