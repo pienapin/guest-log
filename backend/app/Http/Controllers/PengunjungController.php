@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengunjung;
 use Illuminate\Http\Request;
+use App\Exports\PengunjungExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class PengunjungController extends Controller
@@ -115,5 +117,24 @@ class PengunjungController extends Controller
     return response()->json([
       'message' => 'Pengunjung is successfully deleted',
     ], 200);
+  }
+
+  public function export(Request $request)
+  {
+    $nama = "";
+    $instansi = "";
+    $jabatan = "";
+    
+    if ($request->nama) {
+      $nama = $request->nama;
+    }
+    if ($request->instansi) {
+      $instansi = $request->instansi;
+    }
+    if ($request->jabatan) {
+      $jabatan = $request->jabatan;
+    }
+
+    return Excel::download(new PengunjungExport($nama, $instansi, $jabatan), 'Pengunjung.xlsx');
   }
 }

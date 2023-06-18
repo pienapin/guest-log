@@ -7,6 +7,8 @@ use App\Models\Kategori;
 use App\Models\Kunjungan;
 use App\Models\Pelayanan;
 use Illuminate\Http\Request;
+use App\Exports\KunjunganExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class KunjunganController extends Controller
@@ -149,4 +151,16 @@ class KunjunganController extends Controller
     ], 200);
   }
 
+  public function export(Request $request)
+  {
+    if ($request->waktu_kunjungan) {
+      $waktu = explode(",", $request->waktu_kunjungan);
+      if ($waktu[1] == "") {
+        $waktu1 = $waktu[0];
+      } else {
+        $waktu1 = $waktu[1];
+      }
+      return Excel::download(new KunjunganExport($waktu[0].' 00:00:00', $waktu1.' 23:59:59'), 'Kunjungan.xlsx');
+    }
+  }
 }

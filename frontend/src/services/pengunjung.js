@@ -1,4 +1,5 @@
 import { baseApi } from "../plugins/axios";
+import fileDownload from "js-file-download";
 
 const api = '/api/pengunjung'
 
@@ -49,4 +50,25 @@ export async function delPengunjung(body) {
     .post(`${api}/delete/${body}`);
     
   return response.data;
+}
+
+export async function exportPengunjung(search) {
+  let params = ""
+  if (search.keyword) params += `&keyword=${search.keyword}`
+  if (search.instansi) params += `&instansi=${search.instansi}`
+  if (search.jabatan) params += `&jabatan=${search.jabatan}`
+  
+  const response = await baseApi
+  .get(`${api}/export?${params}`, {
+    responseType: 'blob',
+    headers: {'Accept': 'multipart/form-data'}
+  });
+  
+  let nama_file = ""
+  if (search.keyword) nama_file += `_nama-${search.keyword}`
+  if (search.instansi) nama_file += `_intansi-${search.instansi}`
+  if (search.jabatan) nama_file += `_jabatan-${search.jabatan}`
+
+  fileDownload(response, 'rekap_pengunjung'+nama_file+'.xlsx');
+  return response
 }

@@ -38,11 +38,13 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 Route::get('/pengunjung', [PengunjungController::class, 'list']);
 Route::post('/pengunjung/submit', [PengunjungController::class, 'submit']);
 Route::post('/pengunjung/delete/{id}', [PengunjungController::class, 'del']);
+Route::get('/pengunjung/export', [PengunjungController::class, 'export']);
 
 Route::get('/kunjungan', [KunjunganController::class, 'list']);
 Route::get('/kunjungan/count', [KunjunganController::class, 'count']);
 Route::post('/kunjungan/submit', [KunjunganController::class, 'submit']);
 Route::delete('/kunjungan/delete/{id}', [KunjunganController::class, 'del']);
+Route::get('/kunjungan/export', [KunjunganController::class, 'export']);
 
 Route::get('/kategori', [KategoriController::class, 'list']);
 Route::post('/kategori/add', [KategoriController::class, 'add']);
