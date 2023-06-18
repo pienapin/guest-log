@@ -1,4 +1,5 @@
 import { baseApi } from "../plugins/axios";
+import fileDownload from "js-file-download";
 
 const api = '/api/pelayanan'
 
@@ -43,4 +44,22 @@ export async function editPelayanan(body) {
     .post(`${api}/submit`, body, {headers: { 'content-type': 'multipart/form-data' }});
     
   return response.data;
+}
+
+export async function exportPelayanan(tgl) {
+  const response = await baseApi
+    .get(`${api}/export?waktu_kunjungan=${tgl}`, {
+      responseType: 'blob',
+      headers: {'Accept': 'multipart/form-data'}
+    });
+    const tgl_awal = tgl[0];
+    let tgl_akhir;
+    if (tgl[1] != "") {
+      tgl_akhir = tgl[1];
+    } else {
+      tgl_akhir = tgl_awal;
+    }
+    const tgl_file = tgl_awal.replace('-', '').replace('-', '') + '_' + tgl_akhir.replace('-', '').replace('-', '');
+    fileDownload(response, 'rekap_pelayanan_'+tgl_file+'.xlsx');
+  return response
 }

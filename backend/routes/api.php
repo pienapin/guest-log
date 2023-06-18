@@ -53,6 +53,7 @@ Route::delete('/kategori/delete', [KategoriController::class, 'del']);
 Route::get('/pelayanan', [PelayananController::class, 'list']);
 Route::get('/pelayanan/dokumentasi/{fileName}', [PelayananController::class, 'dokumentasi']);
 Route::post('/pelayanan/submit', [PelayananController::class, 'submit']);
+Route::get('/pelayanan/export', [PelayananController::class, 'export']);
 
 Route::get('/user', [UserController::class, 'list']);
 Route::post('/user/add', [UserController::class, 'add']);
