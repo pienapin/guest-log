@@ -29,6 +29,26 @@
         <td></td>
         <td></td>
         <td><input type="text" placeholder="Status Layanan" v-model="search.status_layanan" class="input input-bordered input-sm w-full max-w-xs" /></td>
+        <td>
+          <div>
+            <!-- The button to open modal -->
+            <label for="modal_export" class="btn btn-sm btn-outline btn-success">Export</label>
+
+            <!-- Put this part before </body> tag -->
+            <input type="checkbox" id="modal_export" class="modal-toggle" />
+            <div class="modal">
+              <div class="modal-box" style="--tw-translate-y: -3rem;">
+                <h3 class="font-bold text-lg mb-4">Export to XLSX</h3>
+                <p class="mb-2">Silahkan masukkan rentang tanggal untuk data yang akan diexport :</p>
+                <Datepicker placeholder="Tanggal" v-model="search.waktu_kunjungan" :teleport="true" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" />
+                <div class="modal-action">
+                  <button class="btn btn-success" @click="export_xls()">Export</button>
+                  <label for="modal_export" class="btn btn-error">Close</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
       </tr>
       <tbody :key="renderCount">
           <tr v-if="pelayananList && pelayananList.data.length > 0" v-for="(pelayanan, index) in pelayananList.data" class="hover text-center">
@@ -75,7 +95,7 @@
 import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
 import ImageModal from '../../components/ImageModal.vue';
 import EditPelayanan from "../../components/EditPelayanan.vue";
-import { getPelayananPage, getDokumentasiImg, searchPelayanan } from '../../services/pelayanan';
+import { getPelayananPage, getDokumentasiImg, searchPelayanan, exportPelayanan } from '../../services/pelayanan';
 import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths } from 'date-fns';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -163,6 +183,11 @@ const stopPolling = () => {
 const getImage = async (file) => {
   imageUrl.value = await getDokumentasiImg(file);
   stopPolling()
+}
+
+const export_xls = async () => {
+  const data = await exportPelayanan(search.waktu_kunjungan);
+  console.log(data);
 }
 </script>
 

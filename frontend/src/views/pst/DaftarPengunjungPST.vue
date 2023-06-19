@@ -18,7 +18,30 @@
       <td><input type="text" placeholder="Type here" v-model="search.email" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td><input type="text" placeholder="Type here" v-model="search.no_hp" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
-      <td></td>
+      <td>
+        <div>
+          <!-- The button to open modal -->
+          <label for="modal_export" class="btn btn-sm btn-outline btn-success">Export</label>
+
+          <!-- Put this part before </body> tag -->
+          <input type="checkbox" id="modal_export" class="modal-toggle" />
+          <div class="modal">
+            <div class="modal-box" style="--tw-translate-y: -3rem;">
+              <h3 class="font-bold text-lg mb-4">Export to XLSX</h3>
+              <p class="mb-2">Export berdasarkan filter : </p>
+              <div class="justify-center flex flex-col">
+                <input type="text" placeholder="Nama" v-model="search.keyword" class="input input-bordered input-sm w-full mt-3" />
+                <input type="text" placeholder="Instansi" v-model="search.instansi" class="input input-bordered input-sm w-full mt-3" />
+                <input type="text" placeholder="Jabatan" v-model="search.jabatan" class="input input-bordered input-sm w-full mt-3"/>
+              </div>
+              <div class="modal-action">
+                <button class="btn btn-success" @click="export_xls()">Export</button>
+                <label for="modal_export" class="btn btn-error">Close</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
     </tr>
     <tbody :key="renderCount">
         <tr v-if="pengunjungList && pengunjungList.data.length > 0" v-for="(pengunjung, index) in pengunjungList.data" class="hover text-center">
@@ -56,7 +79,7 @@
 <script setup>
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
-import { getPengunjungPage, searchPengunjung } from '@/services/pengunjung'
+import { getPengunjungPage, searchPengunjung, exportPengunjung } from '@/services/pengunjung'
 import HapusPengunjung from '../../components/HapusPengunjung.vue';
 import EditPengunjung from '../../components/EditPengunjung.vue';
 
@@ -119,5 +142,10 @@ const startPolling = () => {
 
 const stopPolling = () => {
   clearInterval(intervalId);
+}
+
+const export_xls = async () => {
+  const data = await exportPengunjung(search);
+  console.log(data);
 }
 </script>

@@ -2,25 +2,25 @@
   <div class="flex h-full flex-col">
     <div>
       <div class="grid grid-cols-4 gap-4" :key="renderCount">
-        <div class="card bg-base-100 border-s-8 border-indigo-500">
+        <div class="card bg-base-100 border-t-8 border-indigo-500">
           <div class="card-body items-center text-center">
             <h2 class="card-title">Kunjungan Hari ini</h2>
             <h3 class="text-5xl font-semibold mt-3">{{ data.jumlah_hari_ini }}</h3>
           </div>
         </div>
-        <div class="card bg-base-100 border-s-8 border-indigo-500">
+        <div class="card bg-base-100 border-t-8 border-indigo-500">
           <div class="card-body items-center text-center">
             <h2 class="card-title">Kunjungan Pekan ini</h2>
             <h3 class="text-5xl font-semibold mt-3">{{ data.jumlah_pekan_ini }}</h3>
           </div>
         </div>
-        <div class="card bg-base-100 border-s-8 border-indigo-500">
+        <div class="card bg-base-100 border-t-8 border-indigo-500">
           <div class="card-body items-center text-center">
             <h2 class="card-title">Kunjungan Bulan ini</h2>
             <h3 class="text-5xl font-semibold mt-3">{{ data.jumlah_bulan_ini }}</h3>
           </div>
         </div>
-        <div class="card bg-base-100 border-s-8 border-indigo-500">
+        <div class="card bg-base-100 border-t-8 border-indigo-500">
           <div class="card-body items-center text-center">
             <h2 class="card-title">Kunjungan Tahun ini</h2>
             <h3 class="text-5xl font-semibold mt-3">{{ data.jumlah_tahun_ini }}</h3>

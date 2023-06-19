@@ -66,7 +66,7 @@
       <div class="grow">
         <router-view/>
       </div>
-      <footer class="footer footer-center p-4 text-base-content">
+      <footer class="footer mt-4  footer-center p-4 text-base-content">
       <div>
         <p>Copyright © 2023 - All right reserved by MBKM Mandiri - BPS Provinsi Riau & Universitas Riau 2023</p>
       </div>
