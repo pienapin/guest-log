@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen grid auto-rows-max gap-0 grid-flow-row content-between bg-gray-100">
     <div id="submitSuccess" class="alert alert-success w-[90%] justify-center mx-auto absolute left-0 right-0 top-5 shadow-lg hidden">
-      <div>
+      <div class="flex items-center align-middle">
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         <span class="font-medium text-lg">Kunjungan anda telah tercatat! Terima kasih sudah berkunjung! Selamat datang di BPS Provinsi Riau!</span>
       </div>
@@ -46,7 +46,7 @@
 
     <!-- Form -->
     <Teleport to="body">
-      <GuestForm @close="closeForm" :key="renderCount" :mounted="mounted" :kategori="kategoriList" :pengunjung="pengunjung" :descriptorDetected="detected"></GuestForm>
+      <GuestForm @close="closeForm" :key="renderCount" :mounted="mounted" :kategori="kategoriList" :pengunjung="pengunjung" :descriptorDetected="detected" :imgCaptured="imgCaptured"></GuestForm>
     </Teleport>
 
     <!-- Footer -->
@@ -80,6 +80,7 @@ const canvasRef = ref();
 let faceMatcher;
 const pengunjung = ref(null);
 const detected = ref();
+const imgCaptured = ref();
 
 let pengunjungList;
 let kategoriList;
@@ -128,7 +129,7 @@ const startPolling = () => {
   intervalId = setInterval(() => {
     fetchData();
     document.getElementById("submitSuccess").classList.add("hidden")
-  }, 5000);
+  }, 8000);
 }
 
 
@@ -149,16 +150,20 @@ const detectFace = async () => {
   const context = canvas.getContext('2d', { willReadFrequently: true });
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
+  // save image
+  let imagebase64data = canvas.toDataURL("image/png");
+  imgCaptured.value = imagebase64data;
+
   // Send canvas image to face-api.js for processing
   const detection = await faceapi.detectSingleFace(canvas).withFaceLandmarks().withFaceDescriptor();
   let result = null;
   if (detection) {
     // console.log('Face detected!');
-
+    
     // get detected face descriptor
     const detectedDescriptor = detection.descriptor;
     detectedJSON = JSON.stringify([detectedDescriptor]);
-
+    
     // make faceMatcher based on face from database
     if (pengunjungList.length > 0) {
       const labeledDescriptors = pengunjungList.map(pengunjung => {
@@ -168,21 +173,22 @@ const detectFace = async () => {
         return new faceapi.LabeledFaceDescriptors(pengunjung.id.toString(), [descriptor]);
       })
       faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5)
-  
+      
       
       // compare detected descriptor with face from database
       result = faceMatcher.findBestMatch(detectedDescriptor);
     } else {
       result = null;
     }
-
+    
     if (result && result.toString(false) != "unknown") {
 
       const index = pengunjungList.findIndex(pengunjung => {
         return pengunjung.id === parseInt(result.toString(false))
       });
-
+      
       pengunjung.value = pengunjungList[index];
+      detected.value = detectedJSON;
       
     } else {
       pengunjung.value = null;
