@@ -88,10 +88,13 @@ import { addKunjungan } from '../services/kunjungan';
 
 const props = defineProps({
   pengunjung: Object,
+  imgCaptured: String,
   descriptorDetected: String,
   kategori: Array,
   mounted: Boolean,
 });
+
+console.log(props.imgCaptured);
 
 const mountedState = ref(props.mounted);
 
@@ -109,6 +112,7 @@ const form = reactive({
   descriptors: null,
   kategori_id: 0,
   tujuan: "",
+  img: null,
 });
 
 const isPengunjungExists = ref(false);
@@ -126,12 +130,14 @@ onMounted(() => {
     form.email = props.pengunjung.email;
     form.no_hp = props.pengunjung.no_hp;
     form.no_wa = props.pengunjung.no_wa;
-    form.descriptors = props.pengunjung.descriptors;
+    form.descriptors = props.descriptorDetected;
+    form.img = props.imgCaptured;
   
     isPengunjungExists.value = true;
   } else {
-    form.isExists = false;
     form.descriptors = props.descriptorDetected;
+    form.img = props.imgCaptured;
+    form.isExists = false;
   }
 });
 
@@ -171,15 +177,19 @@ document.addEventListener('keyup', escapeToClose, true);
 
 // for submitting form
 const submit = () => {
+  console.log(form);
   if (form.isExists === true) {
-    addKunjungan(
-      {
-        pengunjung_id: form.pengunjung_id,
-        tujuan: form.tujuan,
-        kategori_id: form.kategori_id,
-        waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
-      }
-    );
+    addPengunjung(form)
+      .then((res) => {
+        addKunjungan(
+          {
+            pengunjung_id: form.pengunjung_id,
+            tujuan: form.tujuan,
+            kategori_id: form.kategori_id,
+            waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
+          }
+        );
+      });
   } else {
     addPengunjung(form)
       .then((result) => {
