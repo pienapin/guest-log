@@ -80,7 +80,7 @@ class PelayananController extends Controller
       'id' => 'required',
       'petugas_id' => 'required',
       'data_diminta' => 'required',
-      'dokumentasi' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+      'dokumentasi' => 'required|image|mimes:jpeg,png,jpg|max:1024',
       'status_layanan' => 'required',
       'keterangan_pelayanan' => 'required',
     ]);
