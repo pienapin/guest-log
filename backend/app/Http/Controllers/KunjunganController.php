@@ -133,16 +133,16 @@ class KunjunganController extends Controller
     $data['kategori_jumlah'] = $kategori_jumlah;
     $data['kategori_label'] = $kategori_label;
 
-    $kunjungan_pekan_ini = Kunjungan::whereBetween('waktu_kunjungan', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+    $kunjungan_pekan_ini = Kunjungan::whereBetween('waktu_kunjungan', [Carbon::now('Asia/Jakarta')->startOfWeek(), Carbon::now('Asia/Jakarta')->endOfWeek()])->get();
     $data['jumlah_pekan_ini'] = count($kunjungan_pekan_ini);
     
-    $kunjungan_hari_ini = Kunjungan::whereDate('waktu_kunjungan', Carbon::today())->get();
+    $kunjungan_hari_ini = Kunjungan::whereDate('waktu_kunjungan', Carbon::today('Asia/Jakarta'))->get();
     $data['jumlah_hari_ini'] = count($kunjungan_hari_ini);
     
-    $kunjungan_bulan_ini = Kunjungan::whereMonth('waktu_kunjungan', Carbon::today()->month)->get();
+    $kunjungan_bulan_ini = Kunjungan::whereMonth('waktu_kunjungan', Carbon::today('Asia/Jakarta')->month)->get();
     $data['jumlah_bulan_ini'] = count($kunjungan_bulan_ini);
 
-    $kunjungan_tahun_ini = Kunjungan::whereYear('waktu_kunjungan', Carbon::today()->year)->get();
+    $kunjungan_tahun_ini = Kunjungan::whereYear('waktu_kunjungan', Carbon::today('Asia/Jakarta')->year)->get();
     $data['jumlah_tahun_ini'] = count($kunjungan_tahun_ini);
 
     return response()->json([
