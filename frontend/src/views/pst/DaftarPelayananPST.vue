@@ -75,7 +75,16 @@
                 </label>
                 <EditPelayanan :poll="startPolling" :pelayanan="pelayanan"></EditPelayanan>
             </td>
-            <ImageModal :file-name="pelayanan.dokumentasi" :url="imageUrl" :poll="startPolling"></ImageModal>
+            <Teleport to="body">
+            <input type="checkbox" :id="pelayanan.dokumentasi" class="modal-toggle" />
+            <div class="modal">
+              <div class="modal-box max-xl:max-w-5xl">
+                <label :for="pelayanan.dokumentasi" class="btn btn-sm btn-circle btn-ghost absolute right-[0.5px] top-[0.5px]" @click="poll">✕</label>
+                <img :id="pelayanan.dokumentasi+'img'" :src="hostname+'/pelayanan/'+pelayanan.dokumentasi" class="mx-auto">
+              </div>
+              <label :for="pelayanan.dokumentasi" class="modal-backdrop" @click="startPolling"></label>
+            </div>
+          </Teleport>
           </tr>
           <tr v-else>
             <td colspan="11" class="text-center"> Data Belum Tersedia</td>
@@ -93,7 +102,6 @@
 <script setup>
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
-import ImageModal from '../../components/ImageModal.vue';
 import EditPelayanan from "../../components/EditPelayanan.vue";
 import { getPelayananPage, getDokumentasiImg, searchPelayanan, exportPelayanan } from '../../services/pelayanan';
 import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths } from 'date-fns';
