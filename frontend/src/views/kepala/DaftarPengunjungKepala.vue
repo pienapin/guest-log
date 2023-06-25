@@ -8,6 +8,7 @@
       <th>Email</th>
       <th>No. HP</th>
       <th>No. WA</th>
+      <th>Gambar Wajah</th>
     </tr>
     <tr>
       <th class="text-center"><i class="fa-solid fa-magnifying-glass"></i></th>
@@ -28,6 +29,17 @@
             <td>{{ pengunjung.email }}</td>
             <td>{{ pengunjung.no_hp }}</td>
             <td><a :href="'https://wa.me/'+pengunjung.no_wa">{{ pengunjung.no_wa }}</a></td>
+            <td><label class="cursor-pointer hover:text-cyan-600" :for="pengunjung.wajah_pengunjung" @click="stopPolling">{{ pengunjung.wajah_pengunjung }}</label></td>
+              <Teleport to="body">
+              <input type="checkbox" :id="pengunjung.wajah_pengunjung" class="modal-toggle" />
+              <div class="modal">
+                <div class="modal-box max-xl:max-w-5xl">
+                  <label :for="pengunjung.wajah_pengunjung" class="btn btn-sm btn-circle btn-ghost absolute right-[0.5px] top-[0.5px]" @click="startPolling">✕</label>
+                  <img :id="pengunjung.wajah_pengunjung+'img'" :src="hostname+'/pengunjung/'+pengunjung.wajah_pengunjung" class="mx-auto">
+                </div>
+                <label :for="pengunjung.wajah" class="modal-backdrop" @click="startPolling"></label>
+              </div>
+            </Teleport>
           </tr>
           <tr v-else>
             <td colspan="8" class="text-center">Data belum tersedia</td>
@@ -53,6 +65,7 @@ const renderCount = ref(0);
 const currentPage = ref(1);
 const perPage = ref(15);
 const isSearching = ref(false)
+const hostname = import.meta.env.VITE_BASE_API_URL;
 
 const search = reactive({
   keyword: null,

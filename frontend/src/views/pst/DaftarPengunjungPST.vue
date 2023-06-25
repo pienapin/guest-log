@@ -8,6 +8,7 @@
       <th>Email</th>
       <th>No. HP</th>
       <th>No. WA</th>
+      <th>Gambar Wajah</th>
       <th>Action</th>
     </tr>
     <tr>
@@ -18,6 +19,7 @@
       <td><input type="text" placeholder="Type here" v-model="search.email" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td><input type="text" placeholder="Type here" v-model="search.no_hp" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
+      <td></td>
       <td>
         <div>
           <!-- The button to open modal -->
@@ -52,6 +54,7 @@
             <td>{{ pengunjung.email }}</td>
             <td>{{ pengunjung.no_hp }}</td>
             <td><a :href="'https://wa.me/'+pengunjung.no_wa">{{ pengunjung.no_wa }}</a></td>
+            <td><label class="cursor-pointer hover:text-cyan-600" :for="pengunjung.wajah_pengunjung" @click="stopPolling">{{ pengunjung.wajah_pengunjung }}</label></td>
             <td class="text-center flex">
               <label :for="'edit_'+pengunjung.id" @click="stopPolling" class="btn mx-1 btn-success text-base-100 min-h-0 h-8 w-8 p-0 text-xs">
                 <i class="fa-solid fa-pen"></i>
@@ -63,6 +66,16 @@
               </label>
               <HapusPengunjung :poll="startPolling" :pengunjung="pengunjung"></HapusPengunjung>
             </td>
+            <Teleport to="body">
+              <input type="checkbox" :id="pengunjung.wajah_pengunjung" class="modal-toggle" />
+              <div class="modal">
+                <div class="modal-box max-xl:max-w-5xl">
+                  <label :for="pengunjung.wajah_pengunjung" class="btn btn-sm btn-circle btn-ghost absolute right-[0.5px] top-[0.5px]" @click="startPolling">✕</label>
+                  <img :id="pengunjung.wajah_pengunjung+'img'" :src="hostname+'/pengunjung/'+pengunjung.wajah_pengunjung" class="mx-auto">
+                </div>
+                <label :for="pengunjung.wajah" class="modal-backdrop" @click="startPolling"></label>
+              </div>
+            </Teleport>
           </tr>
           <tr v-else>
             <td colspan="8" class="text-center">Data belum tersedia</td>
