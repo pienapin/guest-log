@@ -30,7 +30,7 @@
     </div>
     <div class="grow">
       <div class="flex h-full mt-4">
-        <div class="grow max-h-full ms-4">
+        <div class="grow max-h-full">
           <div class="card h-full bg-base-100">
             <div class="card-body items-center text-center">
               <h2 class="card-title text-2xl uppercase">Grafik Kunjungan berdasarkan Kategori</h2>
