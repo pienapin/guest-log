@@ -4,6 +4,7 @@
 /public/hot
 /public/storage
 /public/pelayanan
+/public/pengunjung
 /storage/*.key
 /vendor
 .env
