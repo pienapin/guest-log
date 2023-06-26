@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('no_hp');
             $table->string('no_wa');
             $table->json('descriptors');
+            $table->string('wajah_pengunjung');
             $table->timestamps();
         });
     }
