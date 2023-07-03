@@ -83,8 +83,11 @@
 
 <script setup>
 import { reactive, ref, onBeforeUpdate, onUpdated, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { addPengunjung } from '../services/pengunjung';
 import { addKunjungan } from '../services/kunjungan';
+
+const router = useRouter();
 
 const props = defineProps({
   pengunjung: Object,
@@ -188,7 +191,10 @@ const submit = () => {
             kategori_id: form.kategori_id,
             waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
           }
-        );
+        )
+        .then((res) => {
+          router.replace({ name: 'TabelKunjungan' });
+        });
       });
   } else {
     addPengunjung(form)
@@ -201,6 +207,9 @@ const submit = () => {
             waktu_kunjungan: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 19).replace('T', ' ')
           }
         )
+        .then((res) => {
+          router.replace({ name: 'TabelKunjungan' });
+        });
       });
     }
     document.getElementById("submitSuccess").classList.remove("hidden")

@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import { certCookies } from "@/plugins/cookies";
 import Home from "@/views/Home.vue";
+import Beranda from "@/views/Beranda.vue";
+import TabelKunjungan from "@/views/TabelKunjungan.vue";
 import AdminLayout from "@/layouts/AdminLayout.vue";
 import KepalaLayout from "@/layouts/KepalaLayout.vue";
 import PSTLayout from "@/layouts/PSTLayout.vue";
@@ -25,7 +27,19 @@ const routes = [
   {
     name: "Home",
     path: "/",
+    component: Beranda,
+    meta: { guest: true }
+  },
+  {
+    name: "IsiBukuTamu",
+    path: "/isi",
     component: Home,
+    meta: { guest: true }
+  },
+  {
+    name: "TabelKunjungan",
+    path: "/kunjungan",
+    component: TabelKunjungan,
     meta: { guest: true }
   },
   {

@@ -1,23 +1,41 @@
 <template>
   <div class="min-h-screen grid auto-rows-max gap-0 grid-flow-row content-between bg-gray-100">
-    <div id="submitSuccess" class="alert alert-success w-[90%] justify-center mx-auto absolute left-0 right-0 top-5 shadow-lg hidden">
-      <div class="flex items-center align-middle">
+    <div id="submitSuccess" class="alert alert-success w-[90%] justify-center flex mx-auto absolute left-0 right-0 top-5 shadow-lg z-[3] hidden">
+      <div class="flex items-center align-middle justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span class="font-medium text-lg">Kunjungan anda telah tercatat! Terima kasih sudah berkunjung! Selamat datang di BPS Provinsi Riau!</span>
+        <span class="font-medium text-lg ms-3">Kunjungan anda telah tercatat! Terima kasih sudah berkunjung! Selamat datang di BPS Provinsi Riau!</span>
       </div>
     </div>
     <!-- Navbar -->
     <div>
-      <div class="navbar md:py-10 pt-5">
-        <div class="navbar-start"></div>
-        <div class="navbar-center max-md:flex max-md:flex-col">
-          <img class="w-16 mx-5" src="@/assets/img/bps-logo.png">
+      <div class="navbar py-3 px-5">
+        <div class="navbar-start max-md:flex max-md:flex-col">
+          <img class="w-14 mx-5" src="@/assets/img/bps-logo.png">
           <div class="grid grid-flow-row">
-            <a class="uppercase font-medium text-4xl max-md:text-2xl ff-oswald text-center">BUTEP BPS Provinsi Riau</a>
-            <h3 class="uppercase font-medium text-xl max-md:text-sm ff-oswald text-center">Buku Tamu Elektronik Pengenal Wajah</h3>
+            <a class="uppercase font-medium text-2xl ff-oswald text-center">BUTEP BPS Provinsi Riau</a>
+            <h3 class="uppercase font-medium text-sm ff-oswald text-center">Buku Tamu Elektronik Pengenal Wajah</h3>
           </div>
         </div>
-        <div class="navbar-end"></div>
+        <div class="navbar-center max-md:flex max-md:flex-col">
+          
+        </div>
+        <div class="navbar-end max-md:flex max-md:flex-col">
+          <div class="dropdown dropdown-end lg:hidden">
+            <label tabindex="0" class="btn btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+            </label>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li><router-link to="/">Beranda</router-link></li>
+              <li><router-link to="/isi">Isi Buku Tamu</router-link></li>
+              <li><router-link to="/kunjungan">Daftar Kunjungan</router-link></li>
+            </ul>
+          </div>
+          <ul class="menu menu-horizontal px-1 hidden lg:flex">
+            <li><router-link to="/" class="text-lg">Beranda</router-link></li>
+            <li><router-link to="/isi" class="text-lg">Isi Buku Tamu</router-link></li>
+            <li><router-link to="/kunjungan" class="text-lg">Daftar Kunjungan</router-link></li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -50,8 +68,8 @@
     </Teleport>
 
     <!-- Footer -->
-    <div class="h-[52px]">
-      <footer class="footer footer-center p-4 absolute bottom-0">
+    <div class="h-[32px]">
+      <footer class="footer footer-center p-3 absolute bottom-0">
         <div>
           <p>Copyright © 2023 - All right reserved by Magang MBKM Mandiri by BPS Riau - Universitas Riau 2023</p>
         </div>
