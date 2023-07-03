@@ -3,8 +3,9 @@
 /public/build
 /public/hot
 /public/storage
-/public/pelayanan
-/public/pengunjung
+/public/pelayanan/*.jpg
+/public/pelayanan/*.png
+/public/pengunjung/*.png
 /storage/*.key
 /vendor
 .env
