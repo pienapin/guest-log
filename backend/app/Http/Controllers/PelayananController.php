@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Kunjungan;
 use App\Models\Pelayanan;
 use Illuminate\Http\Request;
+use App\Exports\PelayananExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class PelayananController extends Controller
@@ -78,7 +80,7 @@ class PelayananController extends Controller
       'id' => 'required',
       'petugas_id' => 'required',
       'data_diminta' => 'required',
-      'dokumentasi' => 'required|image|mimes:jpeg,png,jpg|max:5120',
+      'dokumentasi' => 'required|image|mimes:jpeg,png,jpg|max:1024',
       'status_layanan' => 'required',
       'keterangan_pelayanan' => 'required',
     ]);
@@ -108,5 +110,18 @@ class PelayananController extends Controller
         'message'=>'Pelayanan\'s data is successfully updated',
         'data'=>$pelayanan 
       ], 200);
+  }
+
+  public function export(Request $request)
+  {
+    if ($request->waktu_kunjungan) {
+      $waktu = explode(",", $request->waktu_kunjungan);
+      if ($waktu[1] == "") {
+        $waktu1 = $waktu[0];
+      } else {
+        $waktu1 = $waktu[1];
+      }
+      return Excel::download(new PelayananExport($waktu[0].' 00:00:00', $waktu1.' 23:59:59'), 'Pelayanan.xlsx');
+    }
   }
 }

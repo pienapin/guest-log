@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengunjung;
 use Illuminate\Http\Request;
+use App\Exports\PengunjungExport;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
 
 class PengunjungController extends Controller
@@ -73,7 +77,17 @@ class PengunjungController extends Controller
     }
 
     if ($request->pengunjung_id) {
-      $pengunjung = Pengunjung::where('id', $request->pengunjung_id);
+      $pengunjung = Pengunjung::where('id', $request->pengunjung_id)->first();
+
+      $nama_file = $pengunjung->id.'-'.$pengunjung->nama.'.png';
+      if(File::exists(public_path('pengunjung').'/'.$nama_file)){
+        File::delete(public_path('pengunjung').'/'.$nama_file);
+      }
+      
+      $decodedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->img));
+      $storagePath = public_path('pengunjung').'/'.$nama_file;
+      File::put($storagePath, $decodedImage);
+
       $pengunjung->update([
           'nama' => $request->nama,
           'instansi' => $request->instansi,
@@ -81,7 +95,8 @@ class PengunjungController extends Controller
           'email' => $request->email,
           'no_hp' => $request->no_hp,
           'no_wa' => $request->no_wa,
-          'descriptors' => $request->descriptors
+          'descriptors' => $request->descriptors,
+          'wajah_pengunjung' => $nama_file
       ]);
 
       return response()->json([
@@ -97,6 +112,19 @@ class PengunjungController extends Controller
             'no_hp' => $request->no_hp,
             'no_wa' => $request->no_wa,
             'descriptors' => $request->descriptors
+        ]);
+
+        $nama_file = $pengunjung->id.'-'.$pengunjung->nama.'.png';
+        if(File::exists(public_path('pengunjung').'/'.$nama_file)){
+          File::delete(public_path('pengunjung').'/'.$nama_file);
+        }
+        
+        $decodedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $request->img));
+        $storagePath = public_path('pengunjung').'/'.$nama_file;
+        File::put($storagePath, $decodedImage);
+
+        $pengunjung->update([
+          'wajah_pengunjung' => $nama_file
         ]);
 
         return response()->json([
@@ -115,5 +143,24 @@ class PengunjungController extends Controller
     return response()->json([
       'message' => 'Pengunjung is successfully deleted',
     ], 200);
+  }
+
+  public function export(Request $request)
+  {
+    $nama = "";
+    $instansi = "";
+    $jabatan = "";
+    
+    if ($request->nama) {
+      $nama = $request->nama;
+    }
+    if ($request->instansi) {
+      $instansi = $request->instansi;
+    }
+    if ($request->jabatan) {
+      $jabatan = $request->jabatan;
+    }
+
+    return Excel::download(new PengunjungExport($nama, $instansi, $jabatan), 'Pengunjung.xlsx');
   }
 }

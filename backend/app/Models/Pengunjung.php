@@ -17,7 +17,8 @@ class Pengunjung extends Model
         'email',
         'no_hp',
         'no_wa',
-        'descriptors'
+        'descriptors',
+        'wajah_pengunjung'
     ];
 
     public function kunjungan() {

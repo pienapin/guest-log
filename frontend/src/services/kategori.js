@@ -6,7 +6,7 @@ export async function getKategoriList() {
   const response = await baseApi
     .get(`${api}`);
     
-  return response.data;
+  return response;
 }
 
 export async function addKategori(body) {

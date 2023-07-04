@@ -20,7 +20,7 @@
         <td><Datepicker placeholder="Tanggal" v-model="search.waktu_kunjungan" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" /></td>
         <td><input type="text" placeholder="Petugas" v-model="search.petugas" class="input input-bordered input-sm w-full max-w-xs" /></td>
         <td><input type="text" placeholder="Nama" v-model="search.pengunjung" class="input input-bordered input-sm w-full max-w-xs" /></td>
-        <td class="px-6">
+        <td class="px-6 flex">
           <input type="text" placeholder="Jabatan" v-model="search.jabatan" class="input input-bordered input-sm w-1/2 max-w-xs me-3" />
           <input type="text" placeholder="Instansi" v-model="search.instansi" class="input input-bordered input-sm w-1/2 max-w-xs" />
         </td>
@@ -29,6 +29,26 @@
         <td></td>
         <td></td>
         <td><input type="text" placeholder="Status Layanan" v-model="search.status_layanan" class="input input-bordered input-sm w-full max-w-xs" /></td>
+        <td>
+        <div>
+          <!-- The button to open modal -->
+          <label for="modal_export" class="btn btn-sm btn-outline btn-success">Export</label>
+
+          <!-- Put this part before </body> tag -->
+          <input type="checkbox" id="modal_export" class="modal-toggle" />
+          <div class="modal">
+            <div class="modal-box" style="--tw-translate-y: -3rem;">
+              <h3 class="font-bold text-lg mb-4">Export to XLSX</h3>
+              <p class="mb-2">Silahkan masukkan rentang tanggal untuk data yang akan diexport :</p>
+              <Datepicker placeholder="Tanggal" v-model="search.waktu_kunjungan" :teleport="true" :enable-time-picker="false" model-type="yyyy-MM-dd" range position="left" :preset-ranges="presetRanges" />
+              <div class="modal-action">
+                <button class="btn btn-success" @click="export_xls()">Export</button>
+                <label for="modal_export" class="btn btn-error">Close</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
       </tr>
       <tbody :key="renderCount">
           <tr v-if="pelayananList && pelayananList.data.length > 0" v-for="(pelayanan, index) in pelayananList.data" class="hover text-center">
@@ -55,7 +75,16 @@
                 </label>
                 <EditPelayanan :poll="startPolling" :pelayanan="pelayanan"></EditPelayanan>
             </td>
-            <ImageModal :file-name="pelayanan.dokumentasi" :url="imageUrl" :poll="startPolling"></ImageModal>
+            <Teleport to="body">
+            <input type="checkbox" :id="pelayanan.dokumentasi" class="modal-toggle" />
+            <div class="modal">
+              <div class="modal-box max-xl:max-w-5xl">
+                <label :for="pelayanan.dokumentasi" class="btn btn-sm btn-circle btn-ghost absolute right-[0.5px] top-[0.5px]" @click="startPolling">✕</label>
+                <img :id="pelayanan.dokumentasi+'img'" :src="hostname+'/pelayanan/'+pelayanan.dokumentasi" class="mx-auto">
+              </div>
+              <label :for="pelayanan.dokumentasi" class="modal-backdrop" @click="startPolling"></label>
+            </div>
+          </Teleport>
           </tr>
           <tr v-else>
             <td colspan="11" class="text-center"> Data Belum Tersedia</td>
@@ -63,7 +92,7 @@
       </tbody>
     </table>
   </div>
-  <div v-if="pelayananList" class="btn-group w-full justify-center mt-5">
+  <div v-if="pelayananList" class="join w-full justify-center mt-5">
     <button v-if="pelayananList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
     <button class="btn">Page {{ pelayananList.current_page }} of {{ pelayananList.last_page }}</button>
     <button v-if="pelayananList.next_page_url" class="btn" @click="currentPage += 1">»</button>
@@ -73,10 +102,8 @@
 <script setup>
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, ref, reactive } from 'vue';
-// import { getKunjunganPage, searchKunjungan } from '../../services/kunjungan';
-import ImageModal from '../../components/ImageModal.vue';
 import EditPelayanan from "../../components/EditPelayanan.vue";
-import { getPelayananPage, getDokumentasiImg, searchPelayanan } from '../../services/pelayanan';
+import { getPelayananPage, getDokumentasiImg, searchPelayanan, exportPelayanan } from '../../services/pelayanan';
 import { endOfMonth, endOfYear, startOfMonth, startOfYear, subMonths } from 'date-fns';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -88,7 +115,7 @@ const currentPage = ref(1);
 const perPage = ref(15);
 const isSearching = ref(false);
 const imageUrl = ref(null);
-
+const hostname = import.meta.env.VITE_BASE_API_URL;
 
 const presetRanges = ref([
   { 
@@ -132,7 +159,6 @@ const fetchData = async () => {
   } else {
     pelayananList = await getPelayananPage(currentPage.value);
   }
-  console.log(pelayananList)
   renderCount.value += 1;
 }
 
@@ -166,6 +192,11 @@ const stopPolling = () => {
 const getImage = async (file) => {
   imageUrl.value = await getDokumentasiImg(file);
   stopPolling()
+}
+
+const export_xls = async () => {
+  const data = await exportPelayanan(search.waktu_kunjungan);
+  console.log(data);
 }
 </script>
 

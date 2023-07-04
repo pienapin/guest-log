@@ -79,11 +79,30 @@ class UserController extends Controller
 
     public function edit(Request $request)
     {
-      
+      $user = User::where('id', $request->id);
+
+      $user->update([
+        'nip' => $request->nip,
+        'nama' => $request->nama,
+        'email' => $request->email,
+        'no_wa' => $request->no_wa,
+        'role_id' => $request->role_id,
+      ]);
+
+      return response()->json([
+        'message' => 'User is successfully updated!',
+        'data' => $user,
+      ]);
     }
 
     public function del($id)
     {
-      
+      $user = User::where('id', $id);
+
+      $user->delete();
+
+      return response()->json([
+        'message' => 'Pengunjung is successfully deleted',
+      ], 200);
     }
 }

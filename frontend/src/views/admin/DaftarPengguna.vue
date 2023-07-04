@@ -16,7 +16,8 @@
       <td><input type="text" placeholder="Type here" v-model="search.email" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td colspan="2" class="text-center">
-        <button class="btn btn-success h-8 min-h-8 mx-auto w-full">Tambah Pengguna</button>
+        <label for="tambah" @click="stopPolling" class="btn btn-success h-8 min-h-8 mx-auto w-full">Tambah Pengguna</label>
+        <TambahPengguna :poll="startPolling"></TambahPengguna>
       </td>
     </tr>
     <tbody :key="renderCount">
@@ -48,7 +49,7 @@
           </tr>
     </tbody>
   </table>
-  <div v-if="userList" class="btn-group w-full justify-center mt-5">
+  <div v-if="userList" class="join w-full justify-center mt-5">
     <button v-if="userList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
     <button class="btn">Page {{ userList.current_page }} of {{ userList.last_page }}</button>
     <button v-if="userList.next_page_url" class="btn" @click="currentPage += 1">»</button>
@@ -59,6 +60,7 @@
   /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { getUserPage, searchUser } from '@/services/user'
+import TambahPengguna from '@/components/TambahPengguna.vue';
 import EditPengguna from '@/components/EditPengguna.vue';
 import HapusPengguna from '@/components/HapusPengguna.vue';
 
@@ -79,11 +81,6 @@ const search = reactive({
 const fetchData = async () => {
   for (const key of Object.keys(search)) {
     const element = search[key];
-    console.log(key)
-    console.log(element)
-    console.log(element !== null)
-    console.log(element !== "")
-    console.log(isSearching)
     if (element !== null) {
       if (element !== "") {
         isSearching.value = true;
@@ -96,7 +93,6 @@ const fetchData = async () => {
   } else {
     userList = await getUserPage(currentPage.value);
   }
-  console.log(userList)
   renderCount.value += 1;
 }
 
