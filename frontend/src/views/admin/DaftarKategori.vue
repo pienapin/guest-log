@@ -3,7 +3,8 @@
     <tr class="text-center">
       <th>No</th>
       <th class="text-start">Kategori</th>
-      <th><label for="modal_tambaah" class="btn btn-sm btn-outline btn-success">Tambah Kategori</label></th>
+      <th><label for="modal_tambah" class="btn btn-sm btn-outline btn-success">Tambah Kategori</label></th>
+      <TambahKategori></TambahKategori>
     </tr>
     <tbody :key="renderCount">
         <tr v-if="kategoriList && kategoriList.data.length > 0" v-for="(kategori, index) in kategoriList.data" class="hover text-center">
@@ -20,23 +21,26 @@
               </label>
               <HapusPengunjung :poll="startPolling" :pengunjung="pengunjung"></HapusPengunjung>
             </td> -->
+            <td>
+              <label :for="'hapus_'+kategori.id" @click="stopPolling" class="btn mx-1 btn-error text-base-100 btn-square min-h-0 h-8 w-8 p-0 text-xs">
+                <i class="fa-solid fa-trash"></i>
+              </label>
+              <HapusKategori :poll="startPolling" :kategori="kategori"></HapusKategori>
+            </td>
           </tr>
           <tr v-else>
             <td colspan="8" class="text-center">Data belum tersedia</td>
           </tr>
     </tbody>
   </table>
-  <div v-if="pengunjungList" class="join w-full justify-center  mt-5">
-    <button v-if="pengunjungList.prev_page_url" class="btn" @click="currentPage -= 1">«</button>
-    <button class="btn">Page {{ pengunjungList.current_page }} of {{ pengunjungList.last_page }}</button>
-    <button v-if="pengunjungList.next_page_url" class="btn" @click="currentPage += 1">»</button>
-  </div>
 </template>
 
 <script setup>
 /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { getKategoriList } from '@/services/kategori';
+import TambahKategori from '../../components/TambahKategori.vue';
+import HapusKategori from '../../components/HapusKategori.vue';
 
 
 let intervalId;

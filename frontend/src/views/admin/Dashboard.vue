@@ -29,6 +29,20 @@
       </div>
     </div>
     <div class="grow">
+      <div class="flex h-full mt-4">
+        <div class="grow max-h-full">
+          <div class="card h-full bg-base-100">
+            <div class="card-body items-center text-center">
+              <h2 class="card-title text-2xl uppercase">Grafik Kunjungan berdasarkan Kategori</h2>
+              <div class="w-[95%] h-[82%]">
+                <Bar :data="chartData" :options="options" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="grow">
       <div class="h-full mt-4">
         <div class="grid grid-cols-4 gap-4 h-full">
           <div class="h-full">
@@ -65,7 +79,7 @@
         </div>
 
       </div>
-    </div>
+    </div> -->
     </div>
 </template>
 
