@@ -15,6 +15,7 @@ import DaftarPengunjung from "@/views/admin/DaftarPengunjung.vue";
 import DaftarKunjungan from "@/views/admin/DaftarKunjungan.vue";
 import DaftarPengguna from "@/views/admin/DaftarPengguna.vue";
 import DaftarPelayanan from "@/views/admin/DaftarPelayanan.vue";
+import DaftarKategori from "@/views/admin/DaftarKategori.vue";
 import DashboardPST from "@/views/pst/DashboardPST.vue";
 import DaftarPengunjungPST from "@/views/pst/DaftarPengunjungPST.vue";
 import DaftarKunjunganPST from "@/views/pst/DaftarKunjunganPST.vue";
@@ -93,6 +94,13 @@ const routes = [
           title: "Daftar Pelayanan",
         },
       },
+      {
+        path: "daftar-kategori",
+        component: DaftarKategori,
+        meta: {
+          title: "Daftar Kategori"
+        }
+      }
     ],
     meta: { auth: true, admin: true }
   },

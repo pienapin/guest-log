@@ -16,7 +16,8 @@
       <td><input type="text" placeholder="Type here" v-model="search.email" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td><input type="text" placeholder="Type here" v-model="search.no_wa" class="input input-bordered input-sm w-full max-w-xs" /></td>
       <td colspan="2" class="text-center">
-        <button class="btn btn-success h-8 min-h-8 mx-auto w-full">Tambah Pengguna</button>
+        <label for="tambah" @click="stopPolling" class="btn btn-success h-8 min-h-8 mx-auto w-full">Tambah Pengguna</label>
+        <TambahPengguna :poll="startPolling"></TambahPengguna>
       </td>
     </tr>
     <tbody :key="renderCount">
@@ -59,6 +60,7 @@
   /* ==================== imports ==================== */
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import { getUserPage, searchUser } from '@/services/user'
+import TambahPengguna from '@/components/TambahPengguna.vue';
 import EditPengguna from '@/components/EditPengguna.vue';
 import HapusPengguna from '@/components/HapusPengguna.vue';
 

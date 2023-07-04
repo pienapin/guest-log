@@ -38,7 +38,7 @@ export async function addPengunjung(body) {
   return response.data;
 }
 
-export async function editengunjung(body) {
+export async function editPengunjung(body) {
   const response = await baseApi
     .post(`${api}/submit`, body);
     

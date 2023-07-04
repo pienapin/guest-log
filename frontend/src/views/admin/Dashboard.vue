@@ -29,17 +29,41 @@
       </div>
     </div>
     <div class="grow">
-      <div class="flex h-full mt-4">
-        <div class="grow max-h-full">
-          <div class="card h-full bg-base-100">
-            <div class="card-body items-center text-center">
-              <h2 class="card-title text-2xl uppercase">Grafik Kunjungan berdasarkan Kategori</h2>
-              <div class="w-[95%] h-[82%]">
-                <Bar :data="chartData" :options="options" />
+      <div class="h-full mt-4">
+        <div class="grid grid-cols-4 gap-4 h-full">
+          <div class="h-full">
+            <div class="grid grid-rows-2 gap-4 h-full">
+              <div class="card bg-base-100 border-t-8 border-indigo-500">
+                <div class="card-body items-center text-center">
+                  <h2 class="card-title">Pegawai PST dan Jumlah kunjungan yang dilayani</h2>
+                  <table class="table table-compact">
+                    
+                  </table>
+                </div>
+              </div>
+              <div class="card bg-base-100 border-t-8 border-indigo-500">
+                <div class="card-body items-center text-center">
+                  <h2 class="card-title">Kunjungan Tahun ini</h2>
+                  <h3 class="text-5xl font-semibold mt-3">{{ data.jumlah_tahun_ini }}</h3>
+                </div>
               </div>
             </div>
           </div>
+          <div class="col-span-3">
+            <div class="grow h-full">
+                  <div class="card h-full bg-base-100">
+                    <div class="card-body items-center text-center">
+                      <h2 class="card-title text-2xl uppercase">Grafik Kunjungan berdasarkan Kategori</h2>
+                      <div class="w-[95%] h-[82%]">
+                        <Bar :data="chartData" :options="options" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+          </div>
         </div>
+
       </div>
     </div>
     </div>

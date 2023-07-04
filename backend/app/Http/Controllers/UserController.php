@@ -77,9 +77,9 @@ class UserController extends Controller
       ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request)
     {
-      $user = User::where('id', $id);
+      $user = User::where('id', $request->id);
 
       $user->update([
         'nip' => $request->nip,

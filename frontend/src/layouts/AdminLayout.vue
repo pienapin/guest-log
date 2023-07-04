@@ -40,6 +40,12 @@
               Daftar Pelayanan
           </router-link>
         </li>
+        <li class="hover:bg-gray-200 rounded-md">
+          <router-link to="/admin/daftar-kategori" class="w-full text-center py-4 focus:menu-items" exact-active-class="bg-gray-700 text-slate-100">
+            <i class="fa-solid fa-layer-group fa-lg"></i>
+              Daftar Kategori
+          </router-link>
+        </li>
       </ul>
       <button class="btn btn-error mt-auto mx-6 mb-6" @click="logout">Log out</button>
     </div>

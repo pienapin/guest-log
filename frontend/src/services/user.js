@@ -34,3 +34,17 @@ export async function addUser(body) {
     
   return response.data;
 }
+
+export async function editUser(body) {
+  const response = await baseApi
+    .put(`${api}/edit`, body);
+    
+  return response.data;
+}
+
+export async function delUser(body) {
+  const response = await baseApi
+    .delete(`${api}/delete/${body}`);
+    
+  return response.data;
+}
